@@ -1,0 +1,68 @@
+spring:
+  profiles:
+    active: dev
+
+#打印出默认配置启用情况
+debug: false
+
+
+---
+server:
+  port: 8080
+
+spring:
+  profiles: dev
+  datasource:
+    username: root
+    password: 257689
+    url: jdbc:mysql://www.p.yiueil.cn:3306/meeting?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:sqlmap/*Mapper.xml
+  type-aliases-package: cn.yiueil.entity
+
+logging:
+  level:
+    cn:
+      yiueil: debug
+---
+server:
+  port: 8081
+
+spring:
+  profiles: test
+  datasource:
+    username: root
+    password: 257689
+    url: jdbc:mysql://www.p.yiueil.cn:3306/meeting?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:sqlmap/*Mapper.xml
+  type-aliases-package: cn.yiueil.entity
+
+logging:
+  level:
+    cn:
+      yiueil: debug
+---
+server:
+  port: 8082
+
+spring:
+  profiles: prob
+  datasource:
+    username: root
+    password: 257689
+    url: jdbc:mysql://www.p.yiueil.cn:3306/meeting?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:sqlmap/*Mapper.xml
+  type-aliases-package: cn.yiueil.entity
+
+logging:
+  level:
+    cn:
+      yiueil: debug
