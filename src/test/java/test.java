@@ -19,12 +19,15 @@ import java.util.Date;
 public class test {
     public static void main(String[] args) {
         String token="";
-        long l=new Date().getTime();
-        token+="1"+ l +StringUtil.encode("1");
+        long time=new Date().getTime();
+        token = time +StringUtil.encode("1");
+        System.out.println(token);
+
         //生成了token
-        System.out.println(1+"YIueil"+new Date().getTime()+ StringUtil.encode("1"));
+        System.out.println(token);
 
         //加密token
+
 
         //解密token
 

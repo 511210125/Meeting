@@ -10,22 +10,43 @@ debug: false
 server:
   port: 8080
 
+#spring配置
 spring:
-  profiles: dev
+  profiles:
+    active:
   datasource:
     username: root
     password: 257689
     url: jdbc:mysql://www.p.yiueil.cn:3306/meeting?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  #邮件配置
+  mail:
+    default-encoding: UTF-8
+    username: meeting_code@qq.com
+    password: pdamokariruibacj
+    from: ${spring.mail.username}
+    to: 2645763241@qq.com
+    port: 587
+  properties.mail.smtp.starttls.enable: true
+  properties.mail.smtp.starttls.required: true
+  properties.mail.smtp.ssl.enable: true
+  default-encoding: utf-8
+
+
+#mybatis配置
 mybatis:
   mapper-locations: classpath:sqlmap/*Mapper.xml
   type-aliases-package: cn.yiueil.entity
 
+
+#日志配置
 logging:
   level:
     cn:
       yiueil: debug
+
+
 ---
 server:
   port: 8081
