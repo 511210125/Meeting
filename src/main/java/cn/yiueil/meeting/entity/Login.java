@@ -1,11 +1,14 @@
 package cn.yiueil.meeting.entity;
 
+
+
 public class Login {
     private Long id;
 
     private String name;
 
     private String mail;
+
 
     private String phone;
 
