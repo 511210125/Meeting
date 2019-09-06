@@ -1,6 +1,7 @@
 package cn.yiueil.meeting;
 
 
+import cn.yiueil.meeting.entity.Login;
 import cn.yiueil.meeting.mapper.LoginMapperCustom;
 import cn.yiueil.meeting.mapper.PermissionMapperCustom;
 import cn.yiueil.meeting.service.MailService;
@@ -21,6 +22,7 @@ import java.util.Date;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -67,19 +69,24 @@ public class MeetingApplicationTests {
 
     @org.junit.Test
     public void rigister() throws Exception {
-        String responseString = mockMvc.perform(
-                post("/rigisterSubmit")    //请求的url,请求的方法是get
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                        .param("name","test2")
-                        .param("mail","test2@mail")
-                        .param("phone","test2")
-                        .param("passwd","test2")
-                        .param("code","test2")
-        )
-                .andExpect(status().isOk()).andDo(print())         //打印出请求和相应的内容
-                .andReturn().getResponse().getContentAsString();   //将相应的数据转换为字符串
+        try{
+            String responseString = mockMvc.perform(
+                    post("/rigisterSubmit")    //请求的url,请求的方法是get
+                            .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                            .param("name","test2")
+                            .param("mail","2645763241@mail")
+                            .param("phone","18275506742")
+                            .param("passwd","test2")
+                            .param("code","test2")
+            )
+                    .andExpect(status().isOk()).andDo(print())         //打印出请求和相应的内容
+                    .andReturn().getResponse().getContentAsString();   //将相应的数据转换为字符串
 
-        System.out.println("--------返回的json = " + responseString);
+            System.out.println("--------返回的json = " + responseString);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     @org.junit.Test
@@ -112,7 +119,10 @@ public class MeetingApplicationTests {
     private LoginMapperCustom loginMapperCustom;
     @Test
     public void test(){
-
+        Login login = new Login();
+        login.setMail("123");
+        String str = "^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\\d{8}$";
+        System.out.println(login.getMail());
 
 
 //      System.out.println(StringUtil.encode("123"));

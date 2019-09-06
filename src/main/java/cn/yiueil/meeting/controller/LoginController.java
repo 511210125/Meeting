@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Date;
 
 /**
@@ -91,20 +92,15 @@ public class LoginController {
 
      */
     @PostMapping("/rigisterSubmit")
-    public Object rigisterSubmit(@RequestParam String name,
-                           @RequestParam String mail,
-                           @RequestParam String phone,
+    public Object rigisterSubmit(@Valid Login login,
                            @RequestParam String passwd,
                            @RequestParam String code
+
                            ){
-        RJ rj=new RJ("注册信息已存在或者有误啊");
-        Login login;
+        RJ rj=new RJ("注册信息已存在或者不满足校验不通过啊");
         try{
             //注册，，发邮箱，注册成功，直接返回登陆页面
-            login=new Login();
-            login.setMail(mail);
-            login.setName(name);
-            login.setPhone(phone);
+
             //密码MD5加密
             passwd = StringUtil.encode(passwd);
             login.setPasswd(passwd);
