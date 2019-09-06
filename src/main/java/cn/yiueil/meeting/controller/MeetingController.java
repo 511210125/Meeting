@@ -19,7 +19,7 @@ import java.util.Map;
  * _______\///__________________\///////////_____________\/////////_______________\/////////////____________\///____________\/////////////__
  * Create by YIueil
  * Create time 2019/8/31
- * message
+ * message  会议相关
  */
 @RestController
 public class MeetingController {

@@ -1,8 +1,6 @@
 package cn.yiueil.meeting.controller;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.springframework.stereotype.Controller;
 
 /**
  * __/\\\________/\\\____________/\\\\\\\\\\\_____________________________________________________________________________/\\\\\\________
@@ -15,14 +13,12 @@ import static org.junit.Assert.*;
  * _______\/\\\__________________/\\\\\\\\\\\___________\//\\\\\\\\\_____________\//\\\\\\\\\\\\\___________\/\\\____________/\\\\\\\\\\\\\_
  * _______\///__________________\///////////_____________\/////////_______________\/////////////____________\///____________\/////////////__
  * Create by YIueil
- * Create time 2019/9/3
- * message
+ * Create time 2019/9/5
+ * message 后台管理控制器，后台管理专用
  */
-public class LoginControllerTest {
+@Controller
+public class ManagerController {
 
+    //后台管理员登陆
 
-    @Test
-    public void login() {
-
-    }
 }

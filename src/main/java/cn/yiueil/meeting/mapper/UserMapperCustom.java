@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
-@Mapper
+
 public interface UserMapperCustom extends UserMapper {
 
     @Select("SELECT LAST_INSERT_ID()")

@@ -3,14 +3,17 @@ package cn.yiueil.meeting.service.impl;
 import cn.yiueil.meeting.entity.Login;
 import cn.yiueil.meeting.entity.User;
 import cn.yiueil.meeting.mapper.LoginMapperCustom;
+import cn.yiueil.meeting.mapper.PermissionMapperCustom;
 import cn.yiueil.meeting.mapper.UserMapper;
 import cn.yiueil.meeting.mapper.UserMapperCustom;
 import cn.yiueil.meeting.service.LoginService;
+import cn.yiueil.meeting.vo.RJ;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * __/\\\________/\\\____________/\\\\\\\\\\\_____________________________________________________________________________/\\\\\\________
@@ -39,25 +42,36 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private UserMapperCustom userMapperCustom;
 
+    @Autowired
+    private PermissionMapperCustom permissionMapperCustom;
+
     @Override
-    public User findUserById(String key,String passwd) throws Exception{
+    public User findUserById(String key, String passwd, RJ rj) throws Exception{
+        //账户密码验证，用户权限验证
         Login login = loginMapperCustom.loginByKey(key, passwd);
-
         if (login != null){
+            //查询用户权限
+            List<String> permissions = permissionMapperCustom.selectByPrimaryUserId(login.getId());
+            if (!permissions.contains("use")){
+                rj.setMsg("无使用权限");
+                return null;
+            }
             User user = userMapper.selectByPrimaryKey(login.getId());
-            if (login.getIslogin()){
-
+            if (!login.getIslogin()){
                 loginMapperCustom.loginStatusUpdate(login.getId());
+                rj.setMsg("登录成功");
                 return user;
 
             }else{
-
+                rj.setMsg("用户已登陆");
                 return user;
-
             }
 
-        }else
+        }else{
+            rj.setMsg("账号或者密码错误");
             return null;
+        }
+
     }
 
     @Override
@@ -67,7 +81,7 @@ public class LoginServiceImpl implements LoginService {
         user.setName(login.getName());
         user.setMail(login.getMail());
 
-        if (userMapper.insert(user)!=1){
+        if (userMapper.insertSelective(user)!=1){
             return false;
         }
         //用户插入♂ 成功，设置密码

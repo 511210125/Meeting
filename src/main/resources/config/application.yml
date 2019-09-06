@@ -19,21 +19,15 @@ spring:
     password: 257689
     url: jdbc:mysql://www.p.yiueil.cn:3306/meeting?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
-
-  #邮件配置
+  #邮箱设置
   mail:
-    default-encoding: UTF-8
+    host: smtp.qq.com
     username: meeting_code@qq.com
-    password: pdamokariruibacj
-    from: ${spring.mail.username}
-    to: 2645763241@qq.com
-    port: 587
-  properties.mail.smtp.starttls.enable: true
-  properties.mail.smtp.starttls.required: true
-  properties.mail.smtp.ssl.enable: true
-  default-encoding: utf-8
-
-
+    password:  pdamokariruibacj
+    properties.mail.smtp.port: 587
+    default-encoding: UTF-8
+    from: meeting_code@qq.com
+    subject: 智能会议助理
 #mybatis配置
 mybatis:
   mapper-locations: classpath:sqlmap/*Mapper.xml

@@ -1,6 +1,6 @@
 package cn.yiueil.meeting.service;
 
-public interface IMailService {
+public interface MailService {
 
     /**
      * 发送文本邮件

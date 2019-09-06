@@ -2,10 +2,7 @@ package cn.yiueil.meeting.service;
 
 import cn.yiueil.meeting.entity.Login;
 import cn.yiueil.meeting.entity.User;
-import org.springframework.stereotype.Service;
-
-import java.util.Map;
-
+import cn.yiueil.meeting.vo.RJ;
 /**
  * __/\\\________/\\\____________/\\\\\\\\\\\_____________________________________________________________________________/\\\\\\________
  * _\///\\\____/\\\/____________\/////\\\///_____________________________________________________________________________\////\\\________
@@ -22,7 +19,7 @@ import java.util.Map;
  */
 
 public interface LoginService {
-    public User findUserById(String key,String passwd)throws Exception;
+    public User findUserById(String key, String passwd, RJ rj)throws Exception;
 
     boolean insertUser(Login login)throws Exception;
 }

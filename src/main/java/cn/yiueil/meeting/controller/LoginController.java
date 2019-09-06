@@ -3,12 +3,15 @@ package cn.yiueil.meeting.controller;
 import cn.yiueil.meeting.entity.Login;
 import cn.yiueil.meeting.entity.User;
 import cn.yiueil.meeting.service.LoginService;
+import cn.yiueil.meeting.service.MailService;
+import cn.yiueil.meeting.util.CodeGenerator;
 import cn.yiueil.meeting.util.StringUtil;
 import cn.yiueil.meeting.vo.RJ;
 import cn.yiueil.meeting.vo.UserCustom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -27,7 +30,7 @@ import java.util.Date;
  * _______\///__________________\///////////_____________\/////////_______________\/////////////____________\///____________\/////////////__
  * Create by YIueil
  * Create time 2019/9/3
- * message
+ * message 登陆注册模块,登陆注册控制器
  */
 @RestController
 public class LoginController {
@@ -35,8 +38,10 @@ public class LoginController {
 
 
     @Autowired
-    LoginService loginService;
+    private LoginService loginService;
 
+    @Autowired
+    private MailService mailService;
 
     /**
      *message
@@ -53,14 +58,18 @@ public class LoginController {
                         @RequestParam String passwd){
         RJ rj;
         try{
-            User user=loginService.findUserById(key,passwd);
+            rj=new RJ();
+            passwd = StringUtil.encode(passwd);
+            User user=loginService.findUserById(key,passwd,rj);
             if (user == null){
-                return new RJ("账号或者密码错误");
+                return rj;
             }else{
-                rj=new RJ(user);
+                rj.setOb(user);
                 //token生成
                 String token = new Date().getTime()+ StringUtil.encode(user.getId().toString());
+                //后台生成token使用时间戳+用户id的md5
 
+                //前台每次请求发送用户id，用户权限 和token,同时判断时间是否超时，以及用户id使用md5加密后是否和用户一致
                 rj.setToken(token);
 
                 return rj;
@@ -99,6 +108,8 @@ public class LoginController {
             login.setMail(mail);
             login.setName(name);
             login.setPhone(phone);
+            //密码MD5加密
+            passwd = StringUtil.encode(passwd);
             login.setPasswd(passwd);
             if (loginService.insertUser(login)){
                 rj.setMsg("注册成功了,马上返回登陆界面试试咯");
@@ -112,15 +123,33 @@ public class LoginController {
 
     }
 
-    @PostMapping("/sendMail")
-    public boolean sendMail(@RequestParam String phone){
-        if (true)//发送成功
-        {
+    /**
+     *message
+     *Create by YIueil
+     *time 2019/9/5
+     *state
 
-            return true;
-        }else {//发送失败
-            return false;
+     *参数 [mail]
+     *返还值 java.lang.Object
+
+     */
+    @PostMapping("/sendMail")
+    public String sendMail(@RequestParam String mail){
+        RJ rj = new RJ();
+
+        //验证码强度6
+        String code = CodeGenerator.code(6);
+
+        try{//发送邮箱验证码
+            mailService.sendSimpleMail(mail,"智能会议助理",code);
+        }catch (MailException me){
+            logger.error(me.toString());
         }
+
+        //MD5加密,加密后为128位（bit），按照16进制（4位一个16进制数）编码后，就成了32个字符，而不是32位
+        code = StringUtil.encode(code);
+
+        return code;
     }
 
 

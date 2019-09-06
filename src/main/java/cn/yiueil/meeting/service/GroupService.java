@@ -1,6 +1,4 @@
-package cn.yiueil.meeting.controller;
-
-import org.springframework.web.bind.annotation.RestController;
+package cn.yiueil.meeting.service;
 
 /**
  * __/\\\________/\\\____________/\\\\\\\\\\\_____________________________________________________________________________/\\\\\\________
@@ -13,9 +11,19 @@ import org.springframework.web.bind.annotation.RestController;
  * _______\/\\\__________________/\\\\\\\\\\\___________\//\\\\\\\\\_____________\//\\\\\\\\\\\\\___________\/\\\____________/\\\\\\\\\\\\\_
  * _______\///__________________\///////////_____________\/////////_______________\/////////////____________\///____________\/////////////__
  * Create by YIueil
- * Create time 2019/9/3
- * message  普通用户使用功能
+ * Create time 2019/9/5
+ * message
  */
-@RestController
-public class UserController {
+public interface GroupService {
+    //查询所有小组,懒加载小组成员
+
+    //查询某小组成员
+
+    //查询某人所在的小组
+
+    //查询某人所创建的小组
+
+    //删除某小组？
+
+    //
 }

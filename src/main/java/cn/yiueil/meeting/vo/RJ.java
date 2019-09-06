@@ -20,6 +20,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RJ {
+    public RJ() {}
     public RJ(Object ob){
         this.ob=ob;
     }

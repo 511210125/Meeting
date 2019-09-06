@@ -1,6 +1,4 @@
-package cn.yiueil.meeting.controller;
-
-import org.springframework.web.bind.annotation.RestController;
+package cn.yiueil.meeting.service;
 
 /**
  * __/\\\________/\\\____________/\\\\\\\\\\\_____________________________________________________________________________/\\\\\\________
@@ -13,9 +11,40 @@ import org.springframework.web.bind.annotation.RestController;
  * _______\/\\\__________________/\\\\\\\\\\\___________\//\\\\\\\\\_____________\//\\\\\\\\\\\\\___________\/\\\____________/\\\\\\\\\\\\\_
  * _______\///__________________\///////////_____________\/////////_______________\/////////////____________\///____________\/////////////__
  * Create by YIueil
- * Create time 2019/9/3
- * message  普通用户使用功能
+ * Create time 2019/9/5
+ * message
  */
-@RestController
-public class UserController {
+public interface PermissionService {
+    //根据用户id检查用户权限*
+
+    //查询用户角色，懒加载用户权限
+
+    //增加角色
+
+    //增加权限
+
+    //修改用户角色
+
+    //增加用户角色
+
+    //删除用户角色
+
+    //停用角色▷
+
+
+//    SELECT
+//            NAME
+//    FROM
+//  `t_permission`
+//    WHERE id IN
+//            (SELECT
+//                     pid
+//  FROM
+//                     `t_role_permission`
+//                     WHERE rid =
+//                     (SELECT
+//                     rid
+//                     FROM
+//                     `t_user_role`
+//                     WHERE `t_user_role`.uid = 1))
 }

@@ -1,15 +1,15 @@
 package cn.yiueil.meeting;
 
 
-import cn.yiueil.meeting.service.IMailService;
+import cn.yiueil.meeting.mapper.PermissionMapperCustom;
+import cn.yiueil.meeting.service.MailService;
+import cn.yiueil.meeting.util.StringUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -24,8 +24,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class MeetingApplicationTests {
 
     @Autowired
-    IMailService mailService;
+    private MailService mailService;
 
+    @Autowired
+    private PermissionMapperCustom permissionMapperCustom;
     protected MockMvc mockMvc;
 
     @Autowired
@@ -39,7 +41,10 @@ public class MeetingApplicationTests {
 
     @Test
     public void sendmail() {
-        mailService.sendSimpleMail("2645763241@qq.com","主题：你好普通邮件","内容：第一封邮件");
+        Long l = Long.valueOf(1);
+        System.out.println(permissionMapperCustom.selectByPrimaryUserId(l ).contains("use"));
+
+//        mailService.sendSimpleMail("26423424324234325763241@qq.com","智能会议助理","验证码:257689");
 
     }
 
@@ -48,7 +53,7 @@ public class MeetingApplicationTests {
         String responseString = mockMvc.perform(
                 post("/loginSubmit")    //请求的url,请求的方法是get
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                        .param("key","YIueil").param("passwd","257689"))
+                        .param("key","manager").param("passwd","123"))
                 .andExpect(status().isOk()).andDo(print())         //打印出请求和相应的内容
                 .andReturn().getResponse().getContentAsString();   //将相应的数据转换为字符串
 
@@ -70,6 +75,24 @@ public class MeetingApplicationTests {
                 .andReturn().getResponse().getContentAsString();   //将相应的数据转换为字符串
 
         System.out.println("--------返回的json = " + responseString);
+    }
+
+    @org.junit.Test
+    public void send() throws Exception {
+        String responseString = mockMvc.perform(
+                post("/sendMail")    //请求的url,请求的方法是get
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("mail","2645763241@qq.com")
+        )
+                .andExpect(status().isOk()).andDo(print())         //打印出请求和相应的内容
+                .andReturn().getResponse().getContentAsString();   //将相应的数据转换为字符串
+
+        System.out.println("--------返回的json = " + responseString);
+    }
+
+    @Test
+    public void test(){
+        System.out.println(StringUtil.encode("123"));
     }
 
 }

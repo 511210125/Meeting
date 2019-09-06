@@ -1,6 +1,6 @@
-package cn.yiueil.meeting.controller;
+package cn.yiueil.meeting.util;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.Random;
 
 /**
  * __/\\\________/\\\____________/\\\\\\\\\\\_____________________________________________________________________________/\\\\\\________
@@ -13,9 +13,48 @@ import org.springframework.web.bind.annotation.RestController;
  * _______\/\\\__________________/\\\\\\\\\\\___________\//\\\\\\\\\_____________\//\\\\\\\\\\\\\___________\/\\\____________/\\\\\\\\\\\\\_
  * _______\///__________________\///////////_____________\/////////_______________\/////////////____________\///____________\/////////////__
  * Create by YIueil
- * Create time 2019/9/3
- * message  普通用户使用功能
+ * Create time 2019/9/5
+ * message
  */
-@RestController
-public class UserController {
+public class CodeGenerator {
+
+    public static String code(int power) {
+
+        return getCharAndNum(power);
+
+    }
+
+
+
+
+    private static String getCharAndNum(int length) {
+
+        StringBuilder valSb = new StringBuilder();
+
+        for (int i = 0; i < length; i++) {
+
+            String charOrNum = Math.round(Math.random()) % 2 == 0 ? "char" : "num"; // 输出字母还是数字
+
+            if ("char".equalsIgnoreCase(charOrNum)) {
+
+                // 字符串
+
+                int choice = Math.round(Math.random()) % 2 == 0 ? 65 : 97;  // 取得大写字母还是小写字母
+
+                valSb.append((char) (choice + Math.round(Math.random()*25)));
+
+            } else {
+
+                // 数字
+
+                valSb.append(String.valueOf(Math.round(Math.random()*9)));
+
+            }
+
+        }
+
+        return valSb.toString().toLowerCase();
+
+    }
+
 }

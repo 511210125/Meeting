@@ -1,6 +1,6 @@
 package cn.yiueil.meeting.service.impl;
 
-import cn.yiueil.meeting.service.IMailService;
+import cn.yiueil.meeting.service.MailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +9,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -29,21 +30,26 @@ import java.io.File;
  * Create time 2019/9/5
  * message
  */
+
 @Service
-public class IMailServiceImpl implements IMailService {
+public class MailServiceImpl implements MailService {
+
+
+    @Autowired
+    private JavaMailSender javaMailSender;
+
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     /**
      * Spring Boot 提供了一个发送邮件的简单抽象，使用的是下面这个接口，这里直接注入即可使用
      */
 
-    @Autowired
-    private JavaMailSender mailSender;
-
     /**
      * 配置文件中我的qq邮箱
      */
+
     @Value("${spring.mail.from}")
     private String from;
+
 
     /**
      * 简单文本邮件
@@ -64,7 +70,7 @@ public class IMailServiceImpl implements IMailService {
         //邮件内容
         message.setText(content);
         //发送邮件
-        mailSender.send(message);
+        javaMailSender.send(message);
     }
 
     /**
@@ -76,7 +82,7 @@ public class IMailServiceImpl implements IMailService {
     @Override
     public void sendHtmlMail(String to, String subject, String content) {
         //获取MimeMessage对象
-        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper messageHelper;
         try {
             messageHelper = new MimeMessageHelper(message, true);
@@ -89,7 +95,7 @@ public class IMailServiceImpl implements IMailService {
             //邮件内容，html格式
             messageHelper.setText(content, true);
             //发送
-            mailSender.send(message);
+            javaMailSender.send(message);
             //日志信息
             logger.info("邮件已经发送。");
         } catch (MessagingException e) {
@@ -106,7 +112,7 @@ public class IMailServiceImpl implements IMailService {
      */
     @Override
     public void sendAttachmentsMail(String to, String subject, String content, String filePath) {
-        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessage message = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setFrom(from);
@@ -117,7 +123,7 @@ public class IMailServiceImpl implements IMailService {
             FileSystemResource file = new FileSystemResource(new File(filePath));
             String fileName = filePath.substring(filePath.lastIndexOf(File.separator));
             helper.addAttachment(fileName, file);
-            mailSender.send(message);
+            javaMailSender.send(message);
             //日志信息
             logger.info("邮件已经发送。");
         } catch (MessagingException e) {
