@@ -1,6 +1,7 @@
 package cn.yiueil.meeting;
 
 
+import cn.yiueil.meeting.mapper.LoginMapperCustom;
 import cn.yiueil.meeting.mapper.PermissionMapperCustom;
 import cn.yiueil.meeting.service.MailService;
 import cn.yiueil.meeting.util.StringUtil;
@@ -15,6 +16,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.Calendar;
+import java.util.Date;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -78,6 +83,19 @@ public class MeetingApplicationTests {
     }
 
     @org.junit.Test
+    public void t() throws Exception {
+        String responseString = mockMvc.perform(
+                get("/nameCheck")    //请求的url,请求的方法是get
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("name","YIueill")
+        )
+                .andExpect(status().isOk()).andDo(print())         //打印出请求和相应的内容
+                .andReturn().getResponse().getContentAsString();   //将相应的数据转换为字符串
+
+        System.out.println("--------返回的json = " + responseString);
+    }
+
+    @org.junit.Test
     public void send() throws Exception {
         String responseString = mockMvc.perform(
                 post("/sendMail")    //请求的url,请求的方法是get
@@ -90,9 +108,14 @@ public class MeetingApplicationTests {
         System.out.println("--------返回的json = " + responseString);
     }
 
+    @Autowired
+    private LoginMapperCustom loginMapperCustom;
     @Test
     public void test(){
-        System.out.println(StringUtil.encode("123"));
+
+
+
+//      System.out.println(StringUtil.encode("123"));
     }
 
 }

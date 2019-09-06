@@ -23,11 +23,11 @@ spring:
   mail:
     host: smtp.qq.com
     username: meeting_code@qq.com
-    password:  pdamokariruibacj
+    password: pdamokariruibacj
     properties.mail.smtp.port: 587
     default-encoding: UTF-8
     from: meeting_code@qq.com
-    subject: 智能会议助理
+    subject: 验证码
 #mybatis配置
 mybatis:
   mapper-locations: classpath:sqlmap/*Mapper.xml

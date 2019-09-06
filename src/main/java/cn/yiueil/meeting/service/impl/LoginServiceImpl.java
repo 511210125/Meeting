@@ -102,5 +102,20 @@ public class LoginServiceImpl implements LoginService {
 
     }
 
+    @Override
+    public boolean nameCheck(String name) {
+        return loginMapperCustom.nameCheck(name) == 1;
+    }
+
+    @Override
+    public boolean phoneCheck(String phone) {
+        return loginMapperCustom.phoneCheck(phone) == 1;
+    }
+
+    @Override
+    public boolean mailCheck(String mail) {
+        return loginMapperCustom.mailCheck(mail) == 1;
+    }
+
 
 }

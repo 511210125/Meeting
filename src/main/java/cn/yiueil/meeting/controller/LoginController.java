@@ -7,15 +7,12 @@ import cn.yiueil.meeting.service.MailService;
 import cn.yiueil.meeting.util.CodeGenerator;
 import cn.yiueil.meeting.util.StringUtil;
 import cn.yiueil.meeting.vo.RJ;
-import cn.yiueil.meeting.vo.UserCustom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 /**
@@ -148,9 +145,27 @@ public class LoginController {
 
         //MD5加密,加密后为128位（bit），按照16进制（4位一个16进制数）编码后，就成了32个字符，而不是32位
         code = StringUtil.encode(code);
-
         return code;
     }
 
+    /**
+      *message 三个是否存在校验，提高用户感知
+      *Create by YIueil
+      *time 2019/9/6
+      */
+    @GetMapping("/nameCheck")
+    public boolean nameCheck(@RequestParam String name){
+        return loginService.nameCheck(name);
+    }
+
+    @GetMapping("/phoneCheck")
+    public boolean phoneCheck(@RequestParam String phone){
+        return loginService.phoneCheck(phone);
+    }
+
+    @GetMapping("/mailCheck")
+    public boolean mailCheck(@RequestParam String mail){
+        return loginService.mailCheck(mail);
+    }
 
 }

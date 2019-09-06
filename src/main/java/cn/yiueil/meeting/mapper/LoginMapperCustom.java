@@ -13,4 +13,14 @@ public interface LoginMapperCustom extends LoginMapper{
 
     @Update("update t_login set islogin = true where id=#{id}")
     void loginStatusUpdate(Long id);
+
+    //非重复校验
+    @Select("SELECT COUNT(id) FROM t_user WHERE NAME = #{name}")
+    int nameCheck(String name);
+
+    @Select("SELECT COUNT(id) FROM t_user WHERE PHONE = #{phone}")
+    int phoneCheck(String phone);
+
+    @Select("SELECT COUNT(id) FROM t_user WHERE MAIL = #{mail}")
+    int mailCheck(String mail);
 }

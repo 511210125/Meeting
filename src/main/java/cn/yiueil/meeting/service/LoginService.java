@@ -22,4 +22,8 @@ public interface LoginService {
     public User findUserById(String key, String passwd, RJ rj)throws Exception;
 
     boolean insertUser(Login login)throws Exception;
+
+    boolean nameCheck(String name);
+    boolean phoneCheck(String phone);
+    boolean mailCheck(String mail);
 }
