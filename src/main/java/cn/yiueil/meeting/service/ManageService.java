@@ -1,6 +1,7 @@
-import cn.yiueil.meeting.util.StringUtil;
+package cn.yiueil.meeting.service;
 
-import java.util.Date;
+import cn.yiueil.meeting.entity.User;
+import cn.yiueil.meeting.vo.RJ;
 
 /**
  * __/\\\________/\\\____________/\\\\\\\\\\\_____________________________________________________________________________/\\\\\\________
@@ -13,14 +14,10 @@ import java.util.Date;
  * _______\/\\\__________________/\\\\\\\\\\\___________\//\\\\\\\\\_____________\//\\\\\\\\\\\\\___________\/\\\____________/\\\\\\\\\\\\\_
  * _______\///__________________\///////////_____________\/////////_______________\/////////////____________\///____________\/////////////__
  * Create by YIueil
- * Create time 2019/9/4
+ * Create time 2019/9/6
  * message
  */
-public class test {
-    public static void main(String[] args) {
-        System.out.println("http://www.qiniu.yiueil.cn/qiniudns/20190623/aacC1I9j0Ut9.jpg".length());
-
-
-
-    }
+public interface ManageService {
+    //管理员登陆
+    void findManagerByKeyAndPasswd(String key, String passwd, RJ rj);
 }

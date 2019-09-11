@@ -12,13 +12,13 @@ server:
 
 #spring配置
 spring:
-  profiles:
-    active:
+  profiles: dev
   datasource:
     username: root
     password: 257689
     url: jdbc:mysql://www.p.yiueil.cn:3306/meeting?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
+
   #邮箱设置
   mail:
     host: smtp.qq.com
@@ -38,7 +38,8 @@ mybatis:
 logging:
   level:
     cn:
-      yiueil: debug
+      yiueil:
+        meeting: debug
 
 
 ---

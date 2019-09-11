@@ -31,20 +31,4 @@ public interface PermissionService {
 
     //停用角色▷
 
-
-//    SELECT
-//            NAME
-//    FROM
-//  `t_permission`
-//    WHERE id IN
-//            (SELECT
-//                     pid
-//  FROM
-//                     `t_role_permission`
-//                     WHERE rid =
-//                     (SELECT
-//                     rid
-//                     FROM
-//                     `t_user_role`
-//                     WHERE `t_user_role`.uid = 1))
 }

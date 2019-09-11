@@ -19,7 +19,7 @@ import cn.yiueil.meeting.vo.RJ;
  */
 
 public interface LoginService {
-    public User findUserById(String key, String passwd, RJ rj)throws Exception;
+    User findUserById(String key, String passwd, RJ rj)throws Exception;
 
     boolean insertUser(Login login)throws Exception;
 

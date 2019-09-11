@@ -1,15 +1,16 @@
-package cn.yiueil.meeting.controller;
+package cn.yiueil.meeting.service.impl;
 
+import cn.yiueil.meeting.entity.Login;
 import cn.yiueil.meeting.entity.User;
+import cn.yiueil.meeting.mapper.LoginMapperCustom;
+import cn.yiueil.meeting.mapper.PermissionMapperCustom;
+import cn.yiueil.meeting.mapper.UserMapper;
 import cn.yiueil.meeting.service.ManageService;
-import cn.yiueil.meeting.util.StringUtil;
 import cn.yiueil.meeting.vo.RJ;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
-import java.util.Map;
+import java.util.List;
 
 /**
  * __/\\\________/\\\____________/\\\\\\\\\\\_____________________________________________________________________________/\\\\\\________
@@ -22,40 +23,43 @@ import java.util.Map;
  * _______\/\\\__________________/\\\\\\\\\\\___________\//\\\\\\\\\_____________\//\\\\\\\\\\\\\___________\/\\\____________/\\\\\\\\\\\\\_
  * _______\///__________________\///////////_____________\/////////_______________\/////////////____________\///____________\/////////////__
  * Create by YIueil
- * Create time 2019/9/5
- * message 后台管理控制器，后台管理专用
+ * Create time 2019/9/6
+ * message
  */
-@Controller
-public class ManagerController {
+@Service
+public class ManageServiceImpl implements ManageService {
     @Autowired
-    private ManageService manageService;
+    private LoginMapperCustom loginMapperCustom;
 
-    //后台管理员登陆
-    @PostMapping("/manageLoginSubmit")
-    public String manageLoginSubmit(@RequestParam String key,
-                                    @RequestParam String passwd,
-                                    Map<String,String> result, HttpSession session){
-        passwd = StringUtil.encode(passwd);
-        RJ rj =new RJ();
-        manageService.findManagerByKeyAndPasswd(key,passwd,rj);
-        result.put("msg",rj.getMsg());
-        //这里登陆鸭
-        if (rj.getOb()!=null){
-            session.setAttribute("manager",rj.getOb());
-            //重定向防止重新提交表单
-            return "redirect:manageMain";
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private PermissionMapperCustom permissionMapperCustom;
+
+    @Override
+    public void findManagerByKeyAndPasswd(String key, String passwd,RJ rj) {
+        //账户密码验证，用户权限验证
+        Login login = loginMapperCustom.loginByKey(key, passwd);
+        if (login != null){
+            //查询用户权限
+            List<String> permissions = permissionMapperCustom.selectByPrimaryUserId(login.getId());
+            if (!permissions.contains("manage")){
+                rj.setMsg("无使用权限");
+                return;
+            }
+            rj.setOb(userMapper.selectByPrimaryKey(login.getId()));
+            if (!login.getIslogin()){
+                loginMapperCustom.loginStatusUpdate(login.getId());
+                rj.setMsg("管理员登录成功");
+            }else{
+                rj.setMsg("管理员登陆中");
+            }
+
         }else{
-            return "login";
+            rj.setMsg("账号或者密码错误");
         }
-    }
 
-    //后台管理员退出
-    @GetMapping("/managerSignOut")
-    public String managerSignOut(HttpSession session){
-        User manager = (User)session.getAttribute("manager");
-        System.out.println(manager.getName() + "离开了");
-        session.removeAttribute("manager");
-        return "login";
     }
 
 }

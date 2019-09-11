@@ -90,6 +90,25 @@ public class MeetingApplicationTests {
     }
 
     @org.junit.Test
+    public void manageLogin() throws Exception {
+        try{
+            String responseString = mockMvc.perform(
+                    post("/manageLoginSubmit")    //请求的url,请求的方法是get
+                            .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                            .param("key","manager")
+                            .param("passwd","123")
+            )
+                    .andExpect(status().isOk()).andDo(print())         //打印出请求和相应的内容
+                    .andReturn().getResponse().getContentAsString();   //将相应的数据转换为字符串
+
+            System.out.println("--------返回的json = " + responseString);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    @org.junit.Test
     public void t() throws Exception {
         String responseString = mockMvc.perform(
                 get("/nameCheck")    //请求的url,请求的方法是get

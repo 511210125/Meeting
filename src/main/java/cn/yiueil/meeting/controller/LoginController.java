@@ -34,7 +34,6 @@ import java.util.Date;
 public class LoginController {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-
     @Autowired
     private LoginService loginService;
 
