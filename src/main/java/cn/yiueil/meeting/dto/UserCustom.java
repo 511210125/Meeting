@@ -1,4 +1,4 @@
-package cn.yiueil.meeting.vo;
+package cn.yiueil.meeting.dto;
 
 import cn.yiueil.meeting.entity.User;
 import lombok.Getter;
@@ -11,6 +11,5 @@ public class UserCustom extends User {
         this.msg=msg;
     }
     private String msg;
-
 
 }

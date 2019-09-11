@@ -18,9 +18,38 @@ import java.util.Date;
  */
 public class test {
     public static void main(String[] args) {
-        System.out.println("http://www.qiniu.yiueil.cn/qiniudns/20190623/aacC1I9j0Ut9.jpg".length());
+
+        func func=new func();
+        func.fun(new userCustom());
+
+    }
+}
+class func{
+    void fun(user user){
+        userCustom userCustom= (userCustom) user;
+        System.out.println(userCustom);
+    }
+}
 
 
+class user{
+    String name ="张三";
 
+    @Override
+    public String toString() {
+        return "user{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+}
+class userCustom extends user{
+    String sex ="男";
+
+    @Override
+    public String toString() {
+        return "userCustom{" +
+                "name='" + name + '\'' +
+                ", sex='" + sex + '\'' +
+                '}';
     }
 }

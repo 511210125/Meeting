@@ -18,4 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class UserController {
+    //显示用户参加的会议
+
+    //显示用户的个人信息
+
+    //上传头像
+
+    //修改个人信息
+
+    //修改手机号,Ajax
+
+    //修改邮箱,Ajax
+
 }
