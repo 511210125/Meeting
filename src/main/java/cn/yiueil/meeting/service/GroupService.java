@@ -1,8 +1,13 @@
 package cn.yiueil.meeting.service;
 
+import cn.yiueil.meeting.entity.Group;
+import cn.yiueil.meeting.entity.User;
+import cn.yiueil.meeting.vo.GroupVo;
+
 import java.util.List;
 
 /**
+ *
  * __/\\\________/\\\____________/\\\\\\\\\\\_____________________________________________________________________________/\\\\\\________
  * _\///\\\____/\\\/____________\/////\\\///_____________________________________________________________________________\////\\\________
  * ___\///\\\/\\\/__________________\/\\\_________________________________________________________________/\\\______________\/\\\________
@@ -22,21 +27,77 @@ import java.util.List;
  * find***List
  */
 public interface GroupService {
-    //查询所有小组,懒加载小组成员
 
-    //查询某小组成员
+    /**
+     * 操作权限检查,使用于小组敏感操作
+     * @param Uid
+     * @param gid
+     * @return
+     */
+    boolean roleTest(Long Uid, Long gid);
 
-    //查询某人所在的小组
+    /**
+     * 按条件找小组,懒加载小组成员
+     * @param groupFilter
+     * @return
+     */
+    public List<Group> findGroup(Group groupFilter);
 
-    //查询某人所创建的小组
+    /**
+     * 查询某小组成员
+     * @param gid
+     * @return
+     */
+    public List<User> findUserByGidList(Long gid);
 
-    //删除某小组？解散
+    /**
+     * 查询某人创建的小组
+     * @param uid
+     * @return
+     */
+    public List<Group> findCreateByUserGroupList(Long uid);
 
-    //创建小组
+    /**
+     * 查询某人所管理或所在的小组
+     * @param uid
+     * @param urole 用户是否具有管理权限,true或false
+     * @return
+     */
+    public List<Group> findGroupByUserList(Long uid,boolean urole);
 
-    //修改小组信息
+    /**
+     * 查看小组信息,懒加载小组用户
+     * @return
+     */
+    public GroupVo findGroupInformationByGid(Long gid);
 
-    //改变小组的拥有者,或小组管理员
+    /**
+     * 删除某小组？解散
+     * @param gid
+     */
+    public void removeGroupByGid(Long gid);
+
+    /**
+     * 用户建立小组
+     * @param uid
+     * @param newGroup
+     */
+    public void saveNewGroup(Long uid, Group newGroup);
+
+    /**
+     * 修改小组信息
+     * @param uid
+     * @param group
+     */
+    public void modifyGroupInformation(Long uid,Group group);
+
+    /**
+     * 修改某人的小组角色,小组拥有者专用
+     * @param uid
+     * @param handler
+     * @param groupRole
+     */
+    public void modifyGroupUserRole(Long uid,Long handler,String groupRole);
 
     //查询某个小组，考虑是否加入
 

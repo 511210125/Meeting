@@ -13,7 +13,11 @@ public class Meeting {
 
     private String place;
 
+    private String audio;
+
     private Boolean isover;
+
+    private String text;
 
     public Long getId() {
         return id;
@@ -55,11 +59,27 @@ public class Meeting {
         this.place = place == null ? null : place.trim();
     }
 
+    public String getAudio() {
+        return audio;
+    }
+
+    public void setAudio(String audio) {
+        this.audio = audio == null ? null : audio.trim();
+    }
+
     public Boolean getIsover() {
         return isover;
     }
 
     public void setIsover(Boolean isover) {
         this.isover = isover;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text == null ? null : text.trim();
     }
 }

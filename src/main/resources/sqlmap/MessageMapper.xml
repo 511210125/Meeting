@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.yiueil.meeting.mapper.LoginMapper">
-  <resultMap id="BaseResultMap" type="cn.yiueil.meeting.entity.Login">
+<mapper namespace="cn.yiueil.meeting.mapper.MessageMapper">
+  <resultMap id="BaseResultMap" type="cn.yiueil.meeting.entity.Message">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="mail" jdbcType="VARCHAR" property="mail" />
-    <result column="phone" jdbcType="VARCHAR" property="phone" />
-    <result column="passwd" jdbcType="CHAR" property="passwd" />
-    <result column="islogin" jdbcType="BIT" property="islogin" />
+    <result column="msg" jdbcType="VARCHAR" property="msg" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="isread" jdbcType="BIT" property="isread" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,15 +66,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, mail, phone, passwd, islogin
+    id, msg, uid, isread
   </sql>
-  <select id="selectByExample" parameterType="cn.yiueil.meeting.entity.LoginExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="cn.yiueil.meeting.entity.MessageExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from t_login
+    from t_message
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,94 +85,76 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from t_login
+    from t_message
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from t_login
+    delete from t_message
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="cn.yiueil.meeting.entity.LoginExample">
-    delete from t_login
+  <delete id="deleteByExample" parameterType="cn.yiueil.meeting.entity.MessageExample">
+    delete from t_message
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.yiueil.meeting.entity.Login">
-    insert into t_login (id, name, mail, 
-      phone, passwd, islogin)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, 
-      #{phone,jdbcType=VARCHAR}, #{passwd,jdbcType=CHAR}, #{islogin,jdbcType=BIT})
+  <insert id="insert" parameterType="cn.yiueil.meeting.entity.Message">
+    insert into t_message (id, msg, uid, isread
+      )
+    values (#{id,jdbcType=BIGINT}, #{msg,jdbcType=VARCHAR}, #{uid,jdbcType=BIGINT}, #{isread,jdbcType=BIT}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="cn.yiueil.meeting.entity.Login">
-    insert into t_login
+  <insert id="insertSelective" parameterType="cn.yiueil.meeting.entity.Message">
+    insert into t_message
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="name != null">
-        name,
+      <if test="msg != null">
+        msg,
       </if>
-      <if test="mail != null">
-        mail,
+      <if test="uid != null">
+        uid,
       </if>
-      <if test="phone != null">
-        phone,
-      </if>
-      <if test="passwd != null">
-        passwd,
-      </if>
-      <if test="islogin != null">
-        islogin,
+      <if test="isread != null">
+        isread,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
+      <if test="msg != null">
+        #{msg,jdbcType=VARCHAR},
       </if>
-      <if test="mail != null">
-        #{mail,jdbcType=VARCHAR},
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
       </if>
-      <if test="phone != null">
-        #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="passwd != null">
-        #{passwd,jdbcType=CHAR},
-      </if>
-      <if test="islogin != null">
-        #{islogin,jdbcType=BIT},
+      <if test="isread != null">
+        #{isread,jdbcType=BIT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="cn.yiueil.meeting.entity.LoginExample" resultType="java.lang.Long">
-    select count(*) from t_login
+  <select id="countByExample" parameterType="cn.yiueil.meeting.entity.MessageExample" resultType="java.lang.Long">
+    select count(*) from t_message
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update t_login
+    update t_message
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.name != null">
-        name = #{record.name,jdbcType=VARCHAR},
+      <if test="record.msg != null">
+        msg = #{record.msg,jdbcType=VARCHAR},
       </if>
-      <if test="record.mail != null">
-        mail = #{record.mail,jdbcType=VARCHAR},
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=BIGINT},
       </if>
-      <if test="record.phone != null">
-        phone = #{record.phone,jdbcType=VARCHAR},
-      </if>
-      <if test="record.passwd != null">
-        passwd = #{record.passwd,jdbcType=CHAR},
-      </if>
-      <if test="record.islogin != null">
-        islogin = #{record.islogin,jdbcType=BIT},
+      <if test="record.isread != null">
+        isread = #{record.isread,jdbcType=BIT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -182,45 +162,35 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update t_login
+    update t_message
     set id = #{record.id,jdbcType=BIGINT},
-      name = #{record.name,jdbcType=VARCHAR},
-      mail = #{record.mail,jdbcType=VARCHAR},
-      phone = #{record.phone,jdbcType=VARCHAR},
-      passwd = #{record.passwd,jdbcType=CHAR},
-      islogin = #{record.islogin,jdbcType=BIT}
+      msg = #{record.msg,jdbcType=VARCHAR},
+      uid = #{record.uid,jdbcType=BIGINT},
+      isread = #{record.isread,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.yiueil.meeting.entity.Login">
-    update t_login
+  <update id="updateByPrimaryKeySelective" parameterType="cn.yiueil.meeting.entity.Message">
+    update t_message
     <set>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+      <if test="msg != null">
+        msg = #{msg,jdbcType=VARCHAR},
       </if>
-      <if test="mail != null">
-        mail = #{mail,jdbcType=VARCHAR},
+      <if test="uid != null">
+        uid = #{uid,jdbcType=BIGINT},
       </if>
-      <if test="phone != null">
-        phone = #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="passwd != null">
-        passwd = #{passwd,jdbcType=CHAR},
-      </if>
-      <if test="islogin != null">
-        islogin = #{islogin,jdbcType=BIT},
+      <if test="isread != null">
+        isread = #{isread,jdbcType=BIT},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.yiueil.meeting.entity.Login">
-    update t_login
-    set name = #{name,jdbcType=VARCHAR},
-      mail = #{mail,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      passwd = #{passwd,jdbcType=CHAR},
-      islogin = #{islogin,jdbcType=BIT}
+  <update id="updateByPrimaryKey" parameterType="cn.yiueil.meeting.entity.Message">
+    update t_message
+    set msg = #{msg,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=BIGINT},
+      isread = #{isread,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

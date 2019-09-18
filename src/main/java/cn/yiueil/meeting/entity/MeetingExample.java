@@ -425,6 +425,76 @@ public class MeetingExample {
             return (Criteria) this;
         }
 
+        public Criteria andAudioIsNull() {
+            addCriterion("audio is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAudioIsNotNull() {
+            addCriterion("audio is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAudioEqualTo(String value) {
+            addCriterion("audio =", value, "audio");
+            return (Criteria) this;
+        }
+
+        public Criteria andAudioNotEqualTo(String value) {
+            addCriterion("audio <>", value, "audio");
+            return (Criteria) this;
+        }
+
+        public Criteria andAudioGreaterThan(String value) {
+            addCriterion("audio >", value, "audio");
+            return (Criteria) this;
+        }
+
+        public Criteria andAudioGreaterThanOrEqualTo(String value) {
+            addCriterion("audio >=", value, "audio");
+            return (Criteria) this;
+        }
+
+        public Criteria andAudioLessThan(String value) {
+            addCriterion("audio <", value, "audio");
+            return (Criteria) this;
+        }
+
+        public Criteria andAudioLessThanOrEqualTo(String value) {
+            addCriterion("audio <=", value, "audio");
+            return (Criteria) this;
+        }
+
+        public Criteria andAudioLike(String value) {
+            addCriterion("audio like", value, "audio");
+            return (Criteria) this;
+        }
+
+        public Criteria andAudioNotLike(String value) {
+            addCriterion("audio not like", value, "audio");
+            return (Criteria) this;
+        }
+
+        public Criteria andAudioIn(List<String> values) {
+            addCriterion("audio in", values, "audio");
+            return (Criteria) this;
+        }
+
+        public Criteria andAudioNotIn(List<String> values) {
+            addCriterion("audio not in", values, "audio");
+            return (Criteria) this;
+        }
+
+        public Criteria andAudioBetween(String value1, String value2) {
+            addCriterion("audio between", value1, value2, "audio");
+            return (Criteria) this;
+        }
+
+        public Criteria andAudioNotBetween(String value1, String value2) {
+            addCriterion("audio not between", value1, value2, "audio");
+            return (Criteria) this;
+        }
+
         public Criteria andIsoverIsNull() {
             addCriterion("isover is null");
             return (Criteria) this;

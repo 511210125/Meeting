@@ -2,11 +2,9 @@ package cn.yiueil.meeting.mapper;
 
 import cn.yiueil.meeting.entity.User;
 import cn.yiueil.meeting.entity.UserExample;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-
 
 public interface UserMapper {
     long countByExample(UserExample example);

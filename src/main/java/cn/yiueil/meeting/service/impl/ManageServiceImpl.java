@@ -48,7 +48,7 @@ public class ManageServiceImpl implements ManageService {
                 rj.setMsg("无使用权限");
                 return;
             }
-            rj.setOb(userMapper.selectByPrimaryKey(login.getId()));
+            rj.setResult(userMapper.selectByPrimaryKey(login.getId()));
             if (!login.getIslogin()){
                 loginMapperCustom.loginStatusUpdate(login.getId());
                 rj.setMsg("管理员登录成功");

@@ -61,7 +61,7 @@ public class LoginController {
             if (user == null){
                 return rj;
             }else{
-                rj.setOb(user);
+                rj.setResult(user);
                 //token生成
                 String token = new Date().getTime()+ StringUtil.encode(user.getId().toString());
                 //后台生成token使用时间戳+用户id的md5
@@ -96,7 +96,7 @@ public class LoginController {
                            @RequestParam String code
 
                            ){
-        RJ rj=new RJ("注册信息已存在或者不满足校验不通过啊");
+        RJ rj=new RJ();
         try{
             //注册，，发邮箱，注册成功，直接返回登陆页面
 

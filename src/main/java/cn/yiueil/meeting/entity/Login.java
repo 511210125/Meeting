@@ -1,22 +1,14 @@
 package cn.yiueil.meeting.entity;
 
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
 public class Login {
     private Long id;
-    @NotNull
+
     private String name;
-    @NotNull
-    @Email
+
     private String mail;
-    @NotNull
-    @Pattern(regexp = "^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\\d{8}$")
+
     private String phone;
-    @Size(min=6, max=20)
+
     private String passwd;
 
     private Boolean islogin;

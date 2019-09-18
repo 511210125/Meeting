@@ -15,24 +15,46 @@ import lombok.Setter;
  * _______\///__________________\///////////_____________\/////////_______________\/////////////____________\///____________\/////////////__
  * Create by YIueil
  * Create time 2019/9/4
- * message
+ * message Return JSON
  */
 @Getter
 @Setter
 public class RJ {
+    /**
+     * 全部手动设置
+     */
     public RJ() {}
-    public RJ(Object ob){
-        this.ob=ob;
-    }
-    public RJ(String msg){
-        this.msg=msg;
-    }
-    public RJ(Object ob,String token){
-        this.ob=ob;
-        this.token=token;
+
+    /**
+     * 只返回结果,信息默认
+     * @param result
+     */
+    public RJ(Object result){
+        this.result=result;
     }
 
-    private Object ob;
-    private String token;
+    /**
+     * 正常返回结果和信息
+     * @param result
+     * @param msg
+     */
+    public RJ(Object result,String msg){
+        this.msg=msg;
+    }
+
+    /**
+     * 输出错误和错误信息
+     * @param code
+     * @param msg
+     */
+    public RJ(int code,String msg){
+        code = this.code;
+        msg = this.msg;
+    }
+
+    private Object result;
     private String msg;
+    private int code = 200;       //错误编号,默认为正常200
+
+    private String token = null;
 }

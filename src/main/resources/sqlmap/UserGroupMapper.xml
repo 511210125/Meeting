@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.yiueil.meeting.mapper.UserMapper">
-  <resultMap id="BaseResultMap" type="cn.yiueil.meeting.entity.User">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="mail" jdbcType="VARCHAR" property="mail" />
-    <result column="phone" jdbcType="VARCHAR" property="phone" />
-    <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+<mapper namespace="cn.yiueil.meeting.mapper.UserGroupMapper">
+  <resultMap id="BaseResultMap" type="cn.yiueil.meeting.entity.UserGroup">
+    <id column="gid" jdbcType="BIGINT" property="gid" />
+    <id column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="urole" jdbcType="BIT" property="urole" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,15 +65,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, mail, phone, avatar_url
+    gid, uid, urole
   </sql>
-  <select id="selectByExample" parameterType="cn.yiueil.meeting.entity.UserExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="cn.yiueil.meeting.entity.UserGroupExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from t_user
+    from t_user_group
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -83,88 +81,70 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="cn.yiueil.meeting.entity.UserGroupKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from t_user
-    where id = #{id,jdbcType=BIGINT}
+    from t_user_group
+    where gid = #{gid,jdbcType=BIGINT}
+      and uid = #{uid,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from t_user
-    where id = #{id,jdbcType=BIGINT}
+  <delete id="deleteByPrimaryKey" parameterType="cn.yiueil.meeting.entity.UserGroupKey">
+    delete from t_user_group
+    where gid = #{gid,jdbcType=BIGINT}
+      and uid = #{uid,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="cn.yiueil.meeting.entity.UserExample">
-    delete from t_user
+  <delete id="deleteByExample" parameterType="cn.yiueil.meeting.entity.UserGroupExample">
+    delete from t_user_group
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.yiueil.meeting.entity.User">
-    insert into t_user (id, name, mail, 
-      phone, avatar_url)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, 
-      #{phone,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="cn.yiueil.meeting.entity.UserGroup">
+    insert into t_user_group (gid, uid, urole)
+    values (#{gid,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{urole,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="cn.yiueil.meeting.entity.User">
-    insert into t_user
+  <insert id="insertSelective" parameterType="cn.yiueil.meeting.entity.UserGroup">
+    insert into t_user_group
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
+      <if test="gid != null">
+        gid,
       </if>
-      <if test="name != null">
-        name,
+      <if test="uid != null">
+        uid,
       </if>
-      <if test="mail != null">
-        mail,
-      </if>
-      <if test="phone != null">
-        phone,
-      </if>
-      <if test="avatarUrl != null">
-        avatar_url,
+      <if test="urole != null">
+        urole,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
+      <if test="gid != null">
+        #{gid,jdbcType=BIGINT},
       </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
       </if>
-      <if test="mail != null">
-        #{mail,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null">
-        #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="avatarUrl != null">
-        #{avatarUrl,jdbcType=VARCHAR},
+      <if test="urole != null">
+        #{urole,jdbcType=BIT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="cn.yiueil.meeting.entity.UserExample" resultType="java.lang.Long">
-    select count(*) from t_user
+  <select id="countByExample" parameterType="cn.yiueil.meeting.entity.UserGroupExample" resultType="java.lang.Long">
+    select count(*) from t_user_group
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update t_user
+    update t_user_group
     <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=BIGINT},
+      <if test="record.gid != null">
+        gid = #{record.gid,jdbcType=BIGINT},
       </if>
-      <if test="record.name != null">
-        name = #{record.name,jdbcType=VARCHAR},
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=BIGINT},
       </if>
-      <if test="record.mail != null">
-        mail = #{record.mail,jdbcType=VARCHAR},
-      </if>
-      <if test="record.phone != null">
-        phone = #{record.phone,jdbcType=VARCHAR},
-      </if>
-      <if test="record.avatarUrl != null">
-        avatar_url = #{record.avatarUrl,jdbcType=VARCHAR},
+      <if test="record.urole != null">
+        urole = #{record.urole,jdbcType=BIT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -172,40 +152,28 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update t_user
-    set id = #{record.id,jdbcType=BIGINT},
-      name = #{record.name,jdbcType=VARCHAR},
-      mail = #{record.mail,jdbcType=VARCHAR},
-      phone = #{record.phone,jdbcType=VARCHAR},
-      avatar_url = #{record.avatarUrl,jdbcType=VARCHAR}
+    update t_user_group
+    set gid = #{record.gid,jdbcType=BIGINT},
+      uid = #{record.uid,jdbcType=BIGINT},
+      urole = #{record.urole,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.yiueil.meeting.entity.User">
-    update t_user
+  <update id="updateByPrimaryKeySelective" parameterType="cn.yiueil.meeting.entity.UserGroup">
+    update t_user_group
     <set>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="mail != null">
-        mail = #{mail,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null">
-        phone = #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="avatarUrl != null">
-        avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      <if test="urole != null">
+        urole = #{urole,jdbcType=BIT},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where gid = #{gid,jdbcType=BIGINT}
+      and uid = #{uid,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.yiueil.meeting.entity.User">
-    update t_user
-    set name = #{name,jdbcType=VARCHAR},
-      mail = #{mail,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      avatar_url = #{avatarUrl,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
+  <update id="updateByPrimaryKey" parameterType="cn.yiueil.meeting.entity.UserGroup">
+    update t_user_group
+    set urole = #{urole,jdbcType=BIT}
+    where gid = #{gid,jdbcType=BIGINT}
+      and uid = #{uid,jdbcType=BIGINT}
   </update>
 </mapper>

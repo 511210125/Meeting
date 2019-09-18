@@ -9,6 +9,8 @@ public class User {
 
     private String phone;
 
+    private String avatarUrl;
+
     public Long getId() {
         return id;
     }
@@ -39,5 +41,13 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone == null ? null : phone.trim();
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl == null ? null : avatarUrl.trim();
     }
 }

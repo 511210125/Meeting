@@ -7,10 +7,10 @@
     <result column="release_time" jdbcType="TIMESTAMP" property="releaseTime" />
     <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
     <result column="place" jdbcType="VARCHAR" property="place" />
+    <result column="audio" jdbcType="VARCHAR" property="audio" />
     <result column="isover" jdbcType="BIT" property="isover" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.yiueil.meeting.entity.MeetingWithBLOBs">
-    <result column="audio" jdbcType="LONGVARCHAR" property="audio" />
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.yiueil.meeting.entity.Meeting">
     <result column="text" jdbcType="LONGVARCHAR" property="text" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -72,10 +72,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, title, release_time, start_time, place, isover
+    id, title, release_time, start_time, place, audio, isover
   </sql>
   <sql id="Blob_Column_List">
-    audio, text
+    text
   </sql>
   <select id="selectByExampleWithBLOBs" parameterType="cn.yiueil.meeting.entity.MeetingExample" resultMap="ResultMapWithBLOBs">
     select
@@ -125,15 +125,15 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.yiueil.meeting.entity.MeetingWithBLOBs">
+  <insert id="insert" parameterType="cn.yiueil.meeting.entity.Meeting">
     insert into t_meeting (id, title, release_time, 
-      start_time, place, isover, 
-      audio, text)
+      start_time, place, audio, 
+      isover, text)
     values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{releaseTime,jdbcType=TIMESTAMP}, 
-      #{startTime,jdbcType=TIMESTAMP}, #{place,jdbcType=VARCHAR}, #{isover,jdbcType=BIT}, 
-      #{audio,jdbcType=LONGVARCHAR}, #{text,jdbcType=LONGVARCHAR})
+      #{startTime,jdbcType=TIMESTAMP}, #{place,jdbcType=VARCHAR}, #{audio,jdbcType=VARCHAR}, 
+      #{isover,jdbcType=BIT}, #{text,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.yiueil.meeting.entity.MeetingWithBLOBs">
+  <insert id="insertSelective" parameterType="cn.yiueil.meeting.entity.Meeting">
     insert into t_meeting
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -151,11 +151,11 @@
       <if test="place != null">
         place,
       </if>
-      <if test="isover != null">
-        isover,
-      </if>
       <if test="audio != null">
         audio,
+      </if>
+      <if test="isover != null">
+        isover,
       </if>
       <if test="text != null">
         text,
@@ -177,11 +177,11 @@
       <if test="place != null">
         #{place,jdbcType=VARCHAR},
       </if>
+      <if test="audio != null">
+        #{audio,jdbcType=VARCHAR},
+      </if>
       <if test="isover != null">
         #{isover,jdbcType=BIT},
-      </if>
-      <if test="audio != null">
-        #{audio,jdbcType=LONGVARCHAR},
       </if>
       <if test="text != null">
         #{text,jdbcType=LONGVARCHAR},
@@ -212,11 +212,11 @@
       <if test="record.place != null">
         place = #{record.place,jdbcType=VARCHAR},
       </if>
+      <if test="record.audio != null">
+        audio = #{record.audio,jdbcType=VARCHAR},
+      </if>
       <if test="record.isover != null">
         isover = #{record.isover,jdbcType=BIT},
-      </if>
-      <if test="record.audio != null">
-        audio = #{record.audio,jdbcType=LONGVARCHAR},
       </if>
       <if test="record.text != null">
         text = #{record.text,jdbcType=LONGVARCHAR},
@@ -233,8 +233,8 @@
       release_time = #{record.releaseTime,jdbcType=TIMESTAMP},
       start_time = #{record.startTime,jdbcType=TIMESTAMP},
       place = #{record.place,jdbcType=VARCHAR},
+      audio = #{record.audio,jdbcType=VARCHAR},
       isover = #{record.isover,jdbcType=BIT},
-      audio = #{record.audio,jdbcType=LONGVARCHAR},
       text = #{record.text,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -247,12 +247,13 @@
       release_time = #{record.releaseTime,jdbcType=TIMESTAMP},
       start_time = #{record.startTime,jdbcType=TIMESTAMP},
       place = #{record.place,jdbcType=VARCHAR},
+      audio = #{record.audio,jdbcType=VARCHAR},
       isover = #{record.isover,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.yiueil.meeting.entity.MeetingWithBLOBs">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.yiueil.meeting.entity.Meeting">
     update t_meeting
     <set>
       <if test="title != null">
@@ -267,11 +268,11 @@
       <if test="place != null">
         place = #{place,jdbcType=VARCHAR},
       </if>
+      <if test="audio != null">
+        audio = #{audio,jdbcType=VARCHAR},
+      </if>
       <if test="isover != null">
         isover = #{isover,jdbcType=BIT},
-      </if>
-      <if test="audio != null">
-        audio = #{audio,jdbcType=LONGVARCHAR},
       </if>
       <if test="text != null">
         text = #{text,jdbcType=LONGVARCHAR},
@@ -279,14 +280,14 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.yiueil.meeting.entity.MeetingWithBLOBs">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.yiueil.meeting.entity.Meeting">
     update t_meeting
     set title = #{title,jdbcType=VARCHAR},
       release_time = #{releaseTime,jdbcType=TIMESTAMP},
       start_time = #{startTime,jdbcType=TIMESTAMP},
       place = #{place,jdbcType=VARCHAR},
+      audio = #{audio,jdbcType=VARCHAR},
       isover = #{isover,jdbcType=BIT},
-      audio = #{audio,jdbcType=LONGVARCHAR},
       text = #{text,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -296,6 +297,7 @@
       release_time = #{releaseTime,jdbcType=TIMESTAMP},
       start_time = #{startTime,jdbcType=TIMESTAMP},
       place = #{place,jdbcType=VARCHAR},
+      audio = #{audio,jdbcType=VARCHAR},
       isover = #{isover,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>

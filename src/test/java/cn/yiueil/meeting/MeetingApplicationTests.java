@@ -80,7 +80,7 @@ public class MeetingApplicationTests {
         String responseString = mockMvc.perform(
                 post("/loginSubmit")    //请求的url,请求的方法是get
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                        .param("key","manager").param("passwd","123"))
+                        .param("key","system").param("passwd","123"))
                 .andExpect(status().isOk()).andDo(print())         //打印出请求和相应的内容
                 .andReturn().getResponse().getContentAsString();   //将相应的数据转换为字符串
 
@@ -158,7 +158,6 @@ public class MeetingApplicationTests {
     private LoginMapperCustom loginMapperCustom;
     @Test
     public void test(){
-
       System.out.println(StringUtil.encode("123"));
     }
 

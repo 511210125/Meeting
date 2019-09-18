@@ -2,7 +2,6 @@ package cn.yiueil.meeting.mapper;
 
 import cn.yiueil.meeting.entity.Login;
 import cn.yiueil.meeting.entity.LoginExample;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

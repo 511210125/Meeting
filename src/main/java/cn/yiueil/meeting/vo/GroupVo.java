@@ -1,12 +1,14 @@
-package cn.yiueil.meeting.service;
+package cn.yiueil.meeting.vo;
 
-import cn.yiueil.meeting.entity.Meeting;
+import cn.yiueil.meeting.entity.Group;
 import cn.yiueil.meeting.entity.User;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
+ * message 小组信息包装类,我要实现懒加载
  * __/\\\________/\\\____________/\\\\\\\\\\\_____________________________________________________________________________/\\\\\\________
  * _\///\\\____/\\\/____________\/////\\\///_____________________________________________________________________________\////\\\________
  * ___\///\\\/\\\/__________________\/\\\_________________________________________________________________/\\\______________\/\\\________
@@ -17,43 +19,12 @@ import java.util.List;
  * _______\/\\\__________________/\\\\\\\\\\\___________\//\\\\\\\\\_____________\//\\\\\\\\\\\\\___________\/\\\____________/\\\\\\\\\\\\\_
  * _______\///__________________\///////////_____________\/////////_______________\/////////////____________\///____________\/////////////__
  * Create by YIueil
- * Create time 2019/9/5
- * message 用户服务
+ * Create time 2019/9/18
  */
-public interface UserService {
 
-    /**
-     * 查询用户相关会议，参数是会议和人id。做活
-     * @param uid
-     * @param meetingFilter
-     * @return
-     */
-    public List<Meeting> findMeetingByUidList(Long uid,Meeting meetingFilter)throws SQLException;
-
-    /**
-     * 查询用户硌淫信息
-     * @param uid
-     * @return
-     */
-    public User findUserInformationByUid(Long uid)throws SQLException;
-
-    /**
-     * 用户头像上传(修改)，调用七牛云接口
-     * @return
-     * @throws Exception
-     */
-    public boolean modifyUserAvatarUrl()throws SQLException;
-
-    /**
-     * 用户信息更改
-     * @param user
-     * @throws SQLException
-     */
-    public void modifyUserInformation(User user)throws SQLException;
-
-    //调整个人会前提醒时间
-    public List<Meeting> XXX()throws SQLException;
-
-    //设置闹钟式提醒
+@Getter
+@Setter
+public class GroupVo extends Group {
+    private List<User> UserList;
 
 }

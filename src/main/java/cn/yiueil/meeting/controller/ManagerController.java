@@ -40,8 +40,8 @@ public class ManagerController {
         manageService.findManagerByKeyAndPasswd(key,passwd,rj);
         result.put("msg",rj.getMsg());
         //这里登陆鸭
-        if (rj.getOb()!=null){
-            session.setAttribute("manager",rj.getOb());
+        if (rj.getResult()!=null){
+            session.setAttribute("manager",rj.getResult());
             //重定向防止重新提交表单
             return "redirect:manageMain";
         }else{
