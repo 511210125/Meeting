@@ -125,7 +125,7 @@ public class LoginController {
      *返还值 java.lang.Object
 
      */
-    @PostMapping("/sendMail")
+    @GetMapping("/sendMail")
     public String sendMail(@RequestParam String mail){
         RJ rj = new RJ();
 
@@ -138,7 +138,7 @@ public class LoginController {
             logger.error(me.toString());
         }
 
-        //MD5加密,加密后为128位（bit），按照16进制（4位一个16进制数）编码后，就成了32个字符，而不是32位
+        //MD5加密验证码,加密后为128位（bit），按照16进制（4位一个16进制数）编码后，就成了32个字符，而不是32位
         code = StringUtil.encode(code);
         return code;
     }

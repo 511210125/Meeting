@@ -2,6 +2,8 @@ package cn.yiueil.meeting;
 
 
 import cn.yiueil.meeting.entity.Login;
+import cn.yiueil.meeting.entity.LoginExample;
+import cn.yiueil.meeting.mapper.LoginMapper;
 import cn.yiueil.meeting.mapper.LoginMapperCustom;
 import cn.yiueil.meeting.mapper.PermissionMapperCustom;
 import cn.yiueil.meeting.service.MailService;
@@ -12,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -28,7 +31,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+
 public class MeetingApplicationTests {
+    @Autowired
+    private LoginMapper loginMapper;
+    @Test
+    public void test123() {
+        Login login = new Login();
+        login.setName("YIueil");
+        LoginExample loginExample = new LoginExample();
+        loginExample.setDistinct(true);
+        Object o=loginMapper.deleteByExample(loginExample);
+        System.out.println(o);
+
+        System.out.println();
+    }
+
+
+
 
     @Autowired
     private MailService mailService;
@@ -138,13 +158,8 @@ public class MeetingApplicationTests {
     private LoginMapperCustom loginMapperCustom;
     @Test
     public void test(){
-        Login login = new Login();
-        login.setMail("123");
-        String str = "^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\\d{8}$";
-        System.out.println(login.getMail());
 
-
-//      System.out.println(StringUtil.encode("123"));
+      System.out.println(StringUtil.encode("123"));
     }
 
 }

@@ -18,38 +18,12 @@ import java.util.Date;
  */
 public class test {
     public static void main(String[] args) {
-
-        func func=new func();
-        func.fun(new userCustom());
+        func();
+        System.out.println(1);
 
     }
-}
-class func{
-    void fun(user user){
-        userCustom userCustom= (userCustom) user;
-        System.out.println(userCustom);
-    }
-}
 
-
-class user{
-    String name ="张三";
-
-    @Override
-    public String toString() {
-        return "user{" +
-                "name='" + name + '\'' +
-                '}';
-    }
-}
-class userCustom extends user{
-    String sex ="男";
-
-    @Override
-    public String toString() {
-        return "userCustom{" +
-                "name='" + name + '\'' +
-                ", sex='" + sex + '\'' +
-                '}';
+    static void func(){
+        throw new RuntimeException();
     }
 }

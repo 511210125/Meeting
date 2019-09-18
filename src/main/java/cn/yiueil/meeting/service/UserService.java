@@ -1,5 +1,10 @@
 package cn.yiueil.meeting.service;
 
+import cn.yiueil.meeting.entity.Meeting;
+import cn.yiueil.meeting.entity.User;
+
+import java.util.List;
+
 /**
  * __/\\\________/\\\____________/\\\\\\\\\\\_____________________________________________________________________________/\\\\\\________
  * _\///\\\____/\\\/____________\/////\\\///_____________________________________________________________________________\////\\\________
@@ -15,19 +20,33 @@ package cn.yiueil.meeting.service;
  * message 用户服务
  */
 public interface UserService {
-    //查询用户相关会议，参数是会议。做活
 
-    //查询用户硌淫信息
+    /**
+     * 查询用户相关会议，参数是会议和人id。做活
+     * @param uid
+     * @param meetingFilter
+     * @return
+     */
+    public List<Meeting> findMeetingByUserIdList(Long uid,Meeting meetingFilter);
 
-    //用户头像上传，调用七牛云接口
+    /**
+     * 查询用户硌淫信息
+     * @param uid
+     * @return
+     */
+    public User findUserInformationById(Long uid);
+
+    //用户头像上传(修改)，调用七牛云接口
+    public boolean modifyUserHeadImg();
 
     //用户信息更改
+    public void modifyUserInformation(User user);
 
     //用户建立小组
-
-    //用户信息查看
+    public void saveNewGroup(Long uid);
 
     //调整个人会前提醒时间
+    public List<Meeting> findMeetingByUserIDList();
 
     //设置闹钟式提醒
 

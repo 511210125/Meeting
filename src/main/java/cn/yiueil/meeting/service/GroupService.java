@@ -15,9 +15,9 @@ import java.util.List;
  * Create by YIueil
  * Create time 2019/9/5
  * message 小组做主体，用户做宾
- * save
- * remove
- * modify
+ * save 插
+ * remove 删
+ * modify 改
  * find
  * find***List
  */

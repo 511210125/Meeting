@@ -1,5 +1,8 @@
 package cn.yiueil.meeting.controller;
 
+import cn.yiueil.meeting.vo.RJ;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -19,15 +22,33 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
     //显示用户参加的会议
-
+    @GetMapping("showUserMeetingList")
+    public RJ showUserMeetingList(){
+        return null;
+    }
     //显示用户的个人信息
-
+    @GetMapping("showUserInfo")
+    public RJ showUserInfo(){
+        return null;
+    }
     //上传头像
-
-    //修改个人信息
-
-    //修改手机号,Ajax
-
-    //修改邮箱,Ajax
-
+    @PostMapping("uploadHeadImg")
+    public RJ uploadHeadImg(){
+        return null;
+    }
+    //修改个人信息,也没什么好改的。。。
+    @PostMapping("alterUserInfo")
+    public RJ alterUserInfo(){
+        return null;
+    }
+    //手机号更换，手机号短信验证,Ajax
+    @GetMapping("alterUserPhone")
+    public RJ alterUserPhone(){
+        return null;
+    }
+    //邮箱更换，邮箱验证,Ajax
+    @GetMapping("alterUserMail")
+    public RJ alterUserMail(){
+        return null;
+    }
 }
