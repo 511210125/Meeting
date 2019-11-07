@@ -14,6 +14,7 @@ import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.sql.SQLException;
 import java.util.Date;
 
 /**
@@ -31,6 +32,7 @@ import java.util.Date;
  * message 登陆注册模块,登陆注册控制器
  */
 @RestController
+@CrossOrigin
 public class LoginController {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -66,7 +68,7 @@ public class LoginController {
                 String token = new Date().getTime()+ StringUtil.encode(user.getId().toString());
                 //后台生成token使用时间戳+用户id的md5
 
-                //前台每次请求发送用户id，用户权限 和token,同时判断时间是否超时，以及用户id使用md5加密后是否和用户一致
+                //前台每次请求发送用户id，和token,同时判断时间是否超时，以及用户id使用md5加密后是否和用户一致
                 rj.setToken(token);
 
                 return rj;
@@ -90,19 +92,14 @@ public class LoginController {
      *返还值 java.lang.Object
 
      */
-    @PostMapping("/rigisterSubmit")
-    public Object rigisterSubmit(@Valid Login login,
-                           @RequestParam String passwd,
-                           @RequestParam String code
-
-                           ){
+    @PostMapping("/registerSubmit")
+    public Object registerSubmit(@Valid Login login){
         RJ rj=new RJ();
         try{
             //注册，，发邮箱，注册成功，直接返回登陆页面
 
             //密码MD5加密
-            passwd = StringUtil.encode(passwd);
-            login.setPasswd(passwd);
+            login.setPasswd(StringUtil.encode(login.getPasswd()));
             if (loginService.insertUser(login)){
                 rj.setMsg("注册成功了,马上返回登陆界面试试咯");
             }
@@ -110,7 +107,7 @@ public class LoginController {
         }catch (Exception e){
             logger.error(e.toString());
             e.printStackTrace();
-            return rj;
+            throw new RuntimeException();
         }
 
     }
@@ -127,13 +124,16 @@ public class LoginController {
      */
     @GetMapping("/sendMail")
     public String sendMail(@RequestParam String mail){
-        RJ rj = new RJ();
-
         //验证码强度6
         String code = CodeGenerator.code(6);
 
         try{//发送邮箱验证码
-            mailService.sendSimpleMail(mail,"智能会议助理",code);
+            String finalCode = code;
+            new Thread() {
+                public void run() {
+                        mailService.sendSimpleMail(mail,"智能会议助理", finalCode);
+                }
+            }.start();//开启线程
         }catch (MailException me){
             logger.error(me.toString());
         }
@@ -150,17 +150,46 @@ public class LoginController {
       */
     @GetMapping("/nameCheck")
     public boolean nameCheck(@RequestParam String name){
-        return loginService.nameCheck(name);
+        try {
+            return loginService.nameCheck(name);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
     }
 
     @GetMapping("/phoneCheck")
     public boolean phoneCheck(@RequestParam String phone){
-        return loginService.phoneCheck(phone);
+        try {
+            return loginService.phoneCheck(phone);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
     }
 
     @GetMapping("/mailCheck")
     public boolean mailCheck(@RequestParam String mail){
-        return loginService.mailCheck(mail);
+        try {
+            return loginService.mailCheck(mail);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+    }
+
+    @GetMapping("/keyCheck")
+    public boolean keyCheck(@RequestParam String key){
+        try {
+            if (nameCheck(key))
+                return true;
+            else if (phoneCheck(key))
+                return true;
+            else return mailCheck(key);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
     }
 
 }

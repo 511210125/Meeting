@@ -4,6 +4,7 @@ import cn.yiueil.meeting.entity.Group;
 import cn.yiueil.meeting.entity.User;
 import cn.yiueil.meeting.vo.GroupVo;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -30,32 +31,32 @@ public interface GroupService {
 
     /**
      * 操作权限检查,使用于小组敏感操作
-     * @param Uid
+     * @param uid
      * @param gid
      * @return
      */
-    boolean roleTest(Long Uid, Long gid);
+    String roleTest(Long uid, Long gid)throws SQLException;
 
     /**
-     * 按条件找小组,懒加载小组成员
+     * 按条件找小组List,懒加载小组成员
      * @param groupFilter
      * @return
      */
-    public List<Group> findGroup(Group groupFilter);
+    public List<Group> findGroup(Group groupFilter)throws SQLException;
 
     /**
      * 查询某小组成员
      * @param gid
      * @return
      */
-    public List<User> findUserByGidList(Long gid);
+    public List<User> findUserByGidList(Long gid)throws SQLException;
 
     /**
      * 查询某人创建的小组
      * @param uid
      * @return
      */
-    public List<Group> findCreateByUserGroupList(Long uid);
+    public List<Group> findCreateByUserGroupList(Long uid)throws SQLException;
 
     /**
      * 查询某人所管理或所在的小组
@@ -63,47 +64,54 @@ public interface GroupService {
      * @param urole 用户是否具有管理权限,true或false
      * @return
      */
-    public List<Group> findGroupByUserList(Long uid,boolean urole);
+    public List<Group> findGroupByUserList(Long uid,boolean urole)throws SQLException;
 
     /**
      * 查看小组信息,懒加载小组用户
      * @return
      */
-    public GroupVo findGroupInformationByGid(Long gid);
+    public GroupVo findGroupInformationByGid(Long gid)throws SQLException;
 
     /**
      * 删除某小组？解散
      * @param gid
      */
-    public void removeGroupByGid(Long gid);
+    public void removeGroupByGid(Long gid)throws SQLException;
 
     /**
      * 用户建立小组
      * @param uid
      * @param newGroup
      */
-    public void saveNewGroup(Long uid, Group newGroup);
+    public Long saveNewGroup(Long uid, Group newGroup)throws SQLException;
 
     /**
      * 修改小组信息
      * @param uid
      * @param group
      */
-    public void modifyGroupInformation(Long uid,Group group);
+    public void modifyGroupInformation(Long uid,Group group)throws SQLException;
 
     /**
      * 修改某人的小组角色,小组拥有者专用
      * @param uid
-     * @param handler
+     * @param gid
      * @param groupRole
      */
-    public void modifyGroupUserRole(Long uid,Long handler,String groupRole);
+    public void modifyGroupUserRole(Long uid,Long gid,String groupRole)throws SQLException;
 
-    //查询某个小组，考虑是否加入
+    /**
+     * 某人加入该小组
+     * @param uid
+     */
+    public void modifyGroupAddUser(Long uid,Long gid)throws SQLException;
 
-    //某人加入该小组
+    public void modifyGroupAddUserList(List<Long> uids,Long gid)throws SQLException;
 
-    //某人退出该小组
-
+    /**
+     * 某人退出该小组
+     * @param uid
+     */
+    public void removeUserInGroup(Long uid,Long gid)throws SQLException;
 
 }

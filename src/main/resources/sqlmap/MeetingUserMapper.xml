@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.yiueil.meeting.mapper.UserGroupMapper">
-  <resultMap id="BaseResultMap" type="cn.yiueil.meeting.entity.UserGroup">
-    <id column="gid" jdbcType="BIGINT" property="gid" />
+<mapper namespace="cn.yiueil.meeting.mapper.MeetingUserMapper">
+  <resultMap id="BaseResultMap" type="cn.yiueil.meeting.entity.MeetingUser">
+    <id column="mid" jdbcType="BIGINT" property="mid" />
     <id column="uid" jdbcType="BIGINT" property="uid" />
-    <result column="urole" jdbcType="VARCHAR" property="urole" />
+    <result column="mrole" jdbcType="VARCHAR" property="mrole" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -65,15 +66,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    gid, uid, urole
+    mid, uid, mrole, status
   </sql>
-  <select id="selectByExample" parameterType="cn.yiueil.meeting.entity.UserGroupExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="cn.yiueil.meeting.entity.MeetingUserExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from t_user_group
+    from t_meeting_user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -81,72 +82,81 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="cn.yiueil.meeting.entity.UserGroupKey" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="cn.yiueil.meeting.entity.MeetingUserKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from t_user_group
-    where gid = #{gid,jdbcType=BIGINT}
+    from t_meeting_user
+    where mid = #{mid,jdbcType=BIGINT}
       and uid = #{uid,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="cn.yiueil.meeting.entity.UserGroupKey">
-    delete from t_user_group
-    where gid = #{gid,jdbcType=BIGINT}
+  <delete id="deleteByPrimaryKey" parameterType="cn.yiueil.meeting.entity.MeetingUserKey">
+    delete from t_meeting_user
+    where mid = #{mid,jdbcType=BIGINT}
       and uid = #{uid,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="cn.yiueil.meeting.entity.UserGroupExample">
-    delete from t_user_group
+  <delete id="deleteByExample" parameterType="cn.yiueil.meeting.entity.MeetingUserExample">
+    delete from t_meeting_user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.yiueil.meeting.entity.UserGroup">
-    insert into t_user_group (gid, uid, urole
-      )
-    values (#{gid,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{urole,jdbcType=VARCHAR}
-      )
+  <insert id="insert" parameterType="cn.yiueil.meeting.entity.MeetingUser">
+    insert into t_meeting_user (mid, uid, mrole, 
+      status)
+    values (#{mid,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{mrole,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.yiueil.meeting.entity.UserGroup">
-    insert into t_user_group
+  <insert id="insertSelective" parameterType="cn.yiueil.meeting.entity.MeetingUser">
+    insert into t_meeting_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="gid != null">
-        gid,
+      <if test="mid != null">
+        mid,
       </if>
       <if test="uid != null">
         uid,
       </if>
-      <if test="urole != null">
-        urole,
+      <if test="mrole != null">
+        mrole,
+      </if>
+      <if test="status != null">
+        status,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="gid != null">
-        #{gid,jdbcType=BIGINT},
+      <if test="mid != null">
+        #{mid,jdbcType=BIGINT},
       </if>
       <if test="uid != null">
         #{uid,jdbcType=BIGINT},
       </if>
-      <if test="urole != null">
-        #{urole,jdbcType=VARCHAR},
+      <if test="mrole != null">
+        #{mrole,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="cn.yiueil.meeting.entity.UserGroupExample" resultType="java.lang.Long">
-    select count(*) from t_user_group
+  <select id="countByExample" parameterType="cn.yiueil.meeting.entity.MeetingUserExample" resultType="java.lang.Long">
+    select count(*) from t_meeting_user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update t_user_group
+    update t_meeting_user
     <set>
-      <if test="record.gid != null">
-        gid = #{record.gid,jdbcType=BIGINT},
+      <if test="record.mid != null">
+        mid = #{record.mid,jdbcType=BIGINT},
       </if>
       <if test="record.uid != null">
         uid = #{record.uid,jdbcType=BIGINT},
       </if>
-      <if test="record.urole != null">
-        urole = #{record.urole,jdbcType=VARCHAR},
+      <if test="record.mrole != null">
+        mrole = #{record.mrole,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -154,28 +164,33 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update t_user_group
-    set gid = #{record.gid,jdbcType=BIGINT},
+    update t_meeting_user
+    set mid = #{record.mid,jdbcType=BIGINT},
       uid = #{record.uid,jdbcType=BIGINT},
-      urole = #{record.urole,jdbcType=VARCHAR}
+      mrole = #{record.mrole,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.yiueil.meeting.entity.UserGroup">
-    update t_user_group
+  <update id="updateByPrimaryKeySelective" parameterType="cn.yiueil.meeting.entity.MeetingUser">
+    update t_meeting_user
     <set>
-      <if test="urole != null">
-        urole = #{urole,jdbcType=VARCHAR},
+      <if test="mrole != null">
+        mrole = #{mrole,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
       </if>
     </set>
-    where gid = #{gid,jdbcType=BIGINT}
+    where mid = #{mid,jdbcType=BIGINT}
       and uid = #{uid,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.yiueil.meeting.entity.UserGroup">
-    update t_user_group
-    set urole = #{urole,jdbcType=VARCHAR}
-    where gid = #{gid,jdbcType=BIGINT}
+  <update id="updateByPrimaryKey" parameterType="cn.yiueil.meeting.entity.MeetingUser">
+    update t_meeting_user
+    set mrole = #{mrole,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
+    where mid = #{mid,jdbcType=BIGINT}
       and uid = #{uid,jdbcType=BIGINT}
   </update>
 </mapper>

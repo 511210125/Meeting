@@ -7,9 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserCustom extends User {
-    public UserCustom(String msg){
-        this.msg=msg;
-    }
     private String msg;
+    private String mrole;
+    private String status;
 
 }

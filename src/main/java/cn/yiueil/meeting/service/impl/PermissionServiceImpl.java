@@ -1,13 +1,17 @@
-package cn.yiueil.meeting.service;
+package cn.yiueil.meeting.service.impl;
 
-import cn.yiueil.meeting.entity.Login;
-import cn.yiueil.meeting.entity.User;
-import cn.yiueil.meeting.vo.RJ;
-import org.apache.ibatis.jdbc.SQL;
+import cn.yiueil.meeting.entity.UserRole;
+import cn.yiueil.meeting.mapper.PermissionMapperCustom;
+import cn.yiueil.meeting.mapper.UserMapper;
+import cn.yiueil.meeting.mapper.UserRoleMapper;
+import cn.yiueil.meeting.service.PermissionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
+import java.util.List;
 
 /**
+ * message
  * __/\\\________/\\\____________/\\\\\\\\\\\_____________________________________________________________________________/\\\\\\________
  * _\///\\\____/\\\/____________\/////\\\///_____________________________________________________________________________\////\\\________
  * ___\///\\\/\\\/__________________\/\\\_________________________________________________________________/\\\______________\/\\\________
@@ -18,17 +22,25 @@ import java.sql.SQLException;
  * _______\/\\\__________________/\\\\\\\\\\\___________\//\\\\\\\\\_____________\//\\\\\\\\\\\\\___________\/\\\____________/\\\\\\\\\\\\\_
  * _______\///__________________\///////////_____________\/////////_______________\/////////////____________\///____________\/////////////__
  * Create by YIueil
- * Create time 2019/9/3
- * message
+ * Create time 2019/9/18
  */
+@Service
+public class PermissionServiceImpl implements PermissionService {
+    @Autowired
+    PermissionMapperCustom permissionMapperCustom;
+    @Autowired
+    UserRoleMapper userRoleMapper;
 
-public interface LoginService {
-    User findUserById(String key, String passwd, RJ rj)throws SQLException;
+    @Override
+    public List<String> findPermissionByUid(Long uid) {
+        return permissionMapperCustom.selectByPrimaryUserId(uid);
+    }
 
-    boolean insertUser(Login login)throws SQLException;
-
-
-    boolean nameCheck(String name)throws SQLException;
-    boolean phoneCheck(String phone)throws SQLException;
-    boolean mailCheck(String mail)throws SQLException;
+    @Override
+    public void saveUserRole(Long uid,Long rid) {
+        UserRole userRole = new UserRole();
+        userRole.setUid(uid);
+        userRole.setRid(rid);
+        userRoleMapper.insert(userRole);
+    }
 }

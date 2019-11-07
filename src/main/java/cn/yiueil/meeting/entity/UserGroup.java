@@ -1,13 +1,13 @@
 package cn.yiueil.meeting.entity;
 
 public class UserGroup extends UserGroupKey {
-    private Boolean urole;
+    private String urole;
 
-    public Boolean getUrole() {
+    public String getUrole() {
         return urole;
     }
 
-    public void setUrole(Boolean urole) {
-        this.urole = urole;
+    public void setUrole(String urole) {
+        this.urole = urole == null ? null : urole.trim();
     }
 }

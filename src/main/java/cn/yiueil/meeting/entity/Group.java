@@ -1,5 +1,7 @@
 package cn.yiueil.meeting.entity;
 
+import java.util.Date;
+
 public class Group {
     private Long id;
 
@@ -7,7 +9,13 @@ public class Group {
 
     private Integer number;
 
-    private Long owner;
+    private String coverImg;
+
+    private Long createUser;
+
+    private String remark;
+
+    private Date createTime;
 
     public Long getId() {
         return id;
@@ -33,11 +41,35 @@ public class Group {
         this.number = number;
     }
 
-    public Long getOwner() {
-        return owner;
+    public String getCoverImg() {
+        return coverImg;
     }
 
-    public void setOwner(Long owner) {
-        this.owner = owner;
+    public void setCoverImg(String coverImg) {
+        this.coverImg = coverImg == null ? null : coverImg.trim();
+    }
+
+    public Long getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(Long createUser) {
+        this.createUser = createUser;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

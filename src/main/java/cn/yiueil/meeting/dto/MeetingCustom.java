@@ -1,13 +1,14 @@
-package cn.yiueil.meeting.service;
+package cn.yiueil.meeting.dto;
 
-import cn.yiueil.meeting.entity.Login;
-import cn.yiueil.meeting.entity.User;
-import cn.yiueil.meeting.vo.RJ;
-import org.apache.ibatis.jdbc.SQL;
+import cn.yiueil.meeting.entity.Meeting;
+import cn.yiueil.meeting.entity.MeetingUser;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.sql.SQLException;
+import java.util.List;
 
 /**
+ * message
  * __/\\\________/\\\____________/\\\\\\\\\\\_____________________________________________________________________________/\\\\\\________
  * _\///\\\____/\\\/____________\/////\\\///_____________________________________________________________________________\////\\\________
  * ___\///\\\/\\\/__________________\/\\\_________________________________________________________________/\\\______________\/\\\________
@@ -18,17 +19,15 @@ import java.sql.SQLException;
  * _______\/\\\__________________/\\\\\\\\\\\___________\//\\\\\\\\\_____________\//\\\\\\\\\\\\\___________\/\\\____________/\\\\\\\\\\\\\_
  * _______\///__________________\///////////_____________\/////////_______________\/////////////____________\///____________\/////////////__
  * Create by YIueil
- * Create time 2019/9/3
- * message
+ * Create time 2019/9/29
  */
+@Getter
+@Setter
+public class MeetingCustom extends Meeting {
+    private Long uid;//查询人
 
-public interface LoginService {
-    User findUserById(String key, String passwd, RJ rj)throws SQLException;
-
-    boolean insertUser(Login login)throws SQLException;
+    List<MeetingUser> participants;//与会人
 
 
-    boolean nameCheck(String name)throws SQLException;
-    boolean phoneCheck(String phone)throws SQLException;
-    boolean mailCheck(String mail)throws SQLException;
+
 }

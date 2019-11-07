@@ -26,5 +26,4 @@ import java.util.List;
 @Setter
 public class GroupVo extends Group {
     private List<User> UserList;
-
 }

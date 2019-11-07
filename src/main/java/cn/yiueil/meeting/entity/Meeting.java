@@ -11,11 +11,13 @@ public class Meeting {
 
     private Date startTime;
 
+    private String remark;
+
     private String place;
 
     private String audio;
 
-    private Boolean isover;
+    private Byte status;
 
     private String text;
 
@@ -51,6 +53,14 @@ public class Meeting {
         this.startTime = startTime;
     }
 
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
+    }
+
     public String getPlace() {
         return place;
     }
@@ -67,12 +77,12 @@ public class Meeting {
         this.audio = audio == null ? null : audio.trim();
     }
 
-    public Boolean getIsover() {
-        return isover;
+    public Byte getStatus() {
+        return status;
     }
 
-    public void setIsover(Boolean isover) {
-        this.isover = isover;
+    public void setStatus(Byte status) {
+        this.status = status;
     }
 
     public String getText() {

@@ -1,5 +1,7 @@
 package cn.yiueil.meeting.service;
 
+import java.util.List;
+
 /**
  * __/\\\________/\\\____________/\\\\\\\\\\\_____________________________________________________________________________/\\\\\\________
  * _\///\\\____/\\\/____________\/////\\\///_____________________________________________________________________________\////\\\________
@@ -16,10 +18,12 @@ package cn.yiueil.meeting.service;
  */
 public interface PermissionService {
     //根据用户id检查用户权限*
+    public List<String> findPermissionByUid(Long uid);
 
     //查询用户角色，懒加载用户权限
 
-    //增加角色
+    //新用户增加角色/1user/2sys/3system/4manager
+    public void saveUserRole(Long uid,Long rid);
 
     //增加权限
 

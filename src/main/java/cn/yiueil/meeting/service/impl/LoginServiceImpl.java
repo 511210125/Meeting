@@ -2,17 +2,15 @@ package cn.yiueil.meeting.service.impl;
 
 import cn.yiueil.meeting.entity.Login;
 import cn.yiueil.meeting.entity.User;
-import cn.yiueil.meeting.mapper.LoginMapperCustom;
-import cn.yiueil.meeting.mapper.PermissionMapperCustom;
-import cn.yiueil.meeting.mapper.UserMapper;
-import cn.yiueil.meeting.mapper.UserMapperCustom;
+import cn.yiueil.meeting.mapper.*;
 import cn.yiueil.meeting.service.LoginService;
+import cn.yiueil.meeting.service.PermissionService;
 import cn.yiueil.meeting.vo.RJ;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -30,7 +28,7 @@ import java.util.List;
  * message
  */
 @Transactional
-@Service("loginService")
+@Service
 public class LoginServiceImpl implements LoginService {
 
     @Autowired
@@ -43,15 +41,15 @@ public class LoginServiceImpl implements LoginService {
     private UserMapperCustom userMapperCustom;
 
     @Autowired
-    private PermissionMapperCustom permissionMapperCustom;
+    private PermissionService permissionService;
+
 
     @Override
-    public User findUserById(String key, String passwd, RJ rj) throws Exception{
+    public User findUserById(String key, String passwd, RJ rj) throws SQLException {
         //账户密码验证，用户权限验证
         Login login = loginMapperCustom.loginByKey(key, passwd);
         if (login != null){
-            //查询用户权限
-            List<String> permissions = permissionMapperCustom.selectByPrimaryUserId(login.getId());
+            List<String> permissions = permissionService.findPermissionByUid(login.getId());
             if (!permissions.contains("use")){
                 rj.setMsg("无使用权限");
                 return null;
@@ -75,7 +73,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public boolean insertUser(Login login) throws Exception {
+    public boolean insertUser(Login login) throws SQLException {
         User user = new User();
         user.setPhone(login.getPhone());
         user.setName(login.getName());
@@ -86,6 +84,7 @@ public class LoginServiceImpl implements LoginService {
         }
         //用户插入♂ 成功，设置密码
         Long uid = userMapperCustom.getLastId();
+        permissionService.saveUserRole(uid,1L);
         if (uid!=0){
             User newuser = userMapperCustom.selectByPrimaryKey(uid);
 
@@ -93,7 +92,6 @@ public class LoginServiceImpl implements LoginService {
             login.setPhone(newuser.getPhone());
             login.setMail(newuser.getMail());
             login.setName(newuser.getName());
-
             loginMapperCustom.insertSelective(login);
 
             return true;
@@ -103,17 +101,17 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public boolean nameCheck(String name) {
+    public boolean nameCheck(String name) throws SQLException {
         return loginMapperCustom.nameCheck(name) == 1;
     }
 
     @Override
-    public boolean phoneCheck(String phone) {
+    public boolean phoneCheck(String phone)throws SQLException {
         return loginMapperCustom.phoneCheck(phone) == 1;
     }
 
     @Override
-    public boolean mailCheck(String mail) {
+    public boolean mailCheck(String mail)throws SQLException {
         return loginMapperCustom.mailCheck(mail) == 1;
     }
 

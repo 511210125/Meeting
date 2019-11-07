@@ -6,9 +6,10 @@
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="release_time" jdbcType="TIMESTAMP" property="releaseTime" />
     <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="place" jdbcType="VARCHAR" property="place" />
     <result column="audio" jdbcType="VARCHAR" property="audio" />
-    <result column="isover" jdbcType="BIT" property="isover" />
+    <result column="status" jdbcType="TINYINT" property="status" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.yiueil.meeting.entity.Meeting">
     <result column="text" jdbcType="LONGVARCHAR" property="text" />
@@ -72,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, title, release_time, start_time, place, audio, isover
+    id, title, release_time, start_time, remark, place, audio, status
   </sql>
   <sql id="Blob_Column_List">
     text
@@ -127,11 +128,13 @@
   </delete>
   <insert id="insert" parameterType="cn.yiueil.meeting.entity.Meeting">
     insert into t_meeting (id, title, release_time, 
-      start_time, place, audio, 
-      isover, text)
+      start_time, remark, place, 
+      audio, status, text
+      )
     values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{releaseTime,jdbcType=TIMESTAMP}, 
-      #{startTime,jdbcType=TIMESTAMP}, #{place,jdbcType=VARCHAR}, #{audio,jdbcType=VARCHAR}, 
-      #{isover,jdbcType=BIT}, #{text,jdbcType=LONGVARCHAR})
+      #{startTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{place,jdbcType=VARCHAR}, 
+      #{audio,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{text,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cn.yiueil.meeting.entity.Meeting">
     insert into t_meeting
@@ -148,14 +151,17 @@
       <if test="startTime != null">
         start_time,
       </if>
+      <if test="remark != null">
+        remark,
+      </if>
       <if test="place != null">
         place,
       </if>
       <if test="audio != null">
         audio,
       </if>
-      <if test="isover != null">
-        isover,
+      <if test="status != null">
+        status,
       </if>
       <if test="text != null">
         text,
@@ -174,14 +180,17 @@
       <if test="startTime != null">
         #{startTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
       <if test="place != null">
         #{place,jdbcType=VARCHAR},
       </if>
       <if test="audio != null">
         #{audio,jdbcType=VARCHAR},
       </if>
-      <if test="isover != null">
-        #{isover,jdbcType=BIT},
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
       </if>
       <if test="text != null">
         #{text,jdbcType=LONGVARCHAR},
@@ -209,14 +218,17 @@
       <if test="record.startTime != null">
         start_time = #{record.startTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
       <if test="record.place != null">
         place = #{record.place,jdbcType=VARCHAR},
       </if>
       <if test="record.audio != null">
         audio = #{record.audio,jdbcType=VARCHAR},
       </if>
-      <if test="record.isover != null">
-        isover = #{record.isover,jdbcType=BIT},
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=TINYINT},
       </if>
       <if test="record.text != null">
         text = #{record.text,jdbcType=LONGVARCHAR},
@@ -232,9 +244,10 @@
       title = #{record.title,jdbcType=VARCHAR},
       release_time = #{record.releaseTime,jdbcType=TIMESTAMP},
       start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      remark = #{record.remark,jdbcType=VARCHAR},
       place = #{record.place,jdbcType=VARCHAR},
       audio = #{record.audio,jdbcType=VARCHAR},
-      isover = #{record.isover,jdbcType=BIT},
+      status = #{record.status,jdbcType=TINYINT},
       text = #{record.text,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -246,9 +259,10 @@
       title = #{record.title,jdbcType=VARCHAR},
       release_time = #{record.releaseTime,jdbcType=TIMESTAMP},
       start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      remark = #{record.remark,jdbcType=VARCHAR},
       place = #{record.place,jdbcType=VARCHAR},
       audio = #{record.audio,jdbcType=VARCHAR},
-      isover = #{record.isover,jdbcType=BIT}
+      status = #{record.status,jdbcType=TINYINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -265,14 +279,17 @@
       <if test="startTime != null">
         start_time = #{startTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
       <if test="place != null">
         place = #{place,jdbcType=VARCHAR},
       </if>
       <if test="audio != null">
         audio = #{audio,jdbcType=VARCHAR},
       </if>
-      <if test="isover != null">
-        isover = #{isover,jdbcType=BIT},
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
       </if>
       <if test="text != null">
         text = #{text,jdbcType=LONGVARCHAR},
@@ -285,9 +302,10 @@
     set title = #{title,jdbcType=VARCHAR},
       release_time = #{releaseTime,jdbcType=TIMESTAMP},
       start_time = #{startTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
       place = #{place,jdbcType=VARCHAR},
       audio = #{audio,jdbcType=VARCHAR},
-      isover = #{isover,jdbcType=BIT},
+      status = #{status,jdbcType=TINYINT},
       text = #{text,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -296,9 +314,10 @@
     set title = #{title,jdbcType=VARCHAR},
       release_time = #{releaseTime,jdbcType=TIMESTAMP},
       start_time = #{startTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
       place = #{place,jdbcType=VARCHAR},
       audio = #{audio,jdbcType=VARCHAR},
-      isover = #{isover,jdbcType=BIT}
+      status = #{status,jdbcType=TINYINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

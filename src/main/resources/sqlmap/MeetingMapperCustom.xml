@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.yiueil.meeting.mapper.MeetingMapperCustom">
+    <resultMap id="BaseResultMap" type="cn.yiueil.meeting.entity.Meeting">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="release_time" jdbcType="TIMESTAMP" property="releaseTime" />
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+        <result column="remark" jdbcType="VARCHAR" property="remark" />
+        <result column="place" jdbcType="VARCHAR" property="place" />
+        <result column="audio" jdbcType="VARCHAR" property="audio" />
+        <result column="status" jdbcType="TINYINT" property="status" />
+    </resultMap>
+
+    <resultMap id="MeetingCustomMap" type="cn.yiueil.meeting.vo.MeetingVo" extends="BaseResultMap">
+        <collection property="users"  ofType="cn.yiueil.meeting.dto.UserCustom">
+            <id column="uid" jdbcType="BIGINT" property="id" />
+            <result column="name" jdbcType="VARCHAR" property="name" />
+            <result column="mail" jdbcType="VARCHAR" property="mail" />
+            <result column="phone" jdbcType="VARCHAR" property="phone" />
+            <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+            <result column="mrole" jdbcType="VARCHAR" property="mrole" />
+            <result column="ustatus" jdbcType="VARCHAR" property="status" />
+        </collection>
+    </resultMap>
+
+
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.yiueil.meeting.entity.Meeting">
+    <result column="text" jdbcType="LONGVARCHAR" property="text" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, release_time, start_time, place, audio, status
+  </sql>
+  <sql id="Blob_Column_List">
+    text
+  </sql>
+
+  <select id="findManageUserListByUid" parameterType="java.lang.Long" resultType="cn.yiueil.meeting.entity.User">
+      select * from t_user where id in(
+          select distinct  uid from t_user_group where gid in
+          ( select gid from t_user_group where urole != 'user' and uid = #{uid})
+      )
+  </select>
+
+  <select id="findMeetingCustomByUidList" parameterType="java.lang.Long" resultMap="MeetingCustomMap">
+        select
+          `t_meeting`.*,
+          `t_user`.`avatar_url`,
+          `t_user`.`id` uid,
+          `t_user`.`name`,
+          `t_user`.`mail`,
+          `t_user`.`phone`,
+          `t_meeting_user`.`mrole`,
+          `t_meeting_user`.`status` as ustatus
+        from
+          `t_meeting`,`t_user`,`t_meeting_user`
+        where `t_meeting`.`id` = `t_meeting_user`.`mid` and `t_meeting_user`.`uid`= `t_user`.`id`
+         <if test="title != null">
+             and `t_meeting`.`title` like % #{title} %
+         </if>
+          <if test="releaseTime != null">/*一周内*/
+              and `t_meeting`.`release_time` >= (DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+          </if>
+          <if test="startTime != null">
+              and `t_meeting`.`start_time` >= (DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+          </if>
+          <if test="status != null">
+              and `t_meeting`.`status` = #{status}
+          </if>
+         and
+          `t_meeting`.id in (select mid from `t_meeting_user` where `t_meeting_user`.`uid` = #{uid})
+         order by start_time
+  </select>
+
+
+    <select id="findRandomUid" resultType="java.lang.Long">
+      select id from t_user where id in(
+      select uid from t_user_group where urole !='user'
+      )
+  </select>
+
+</mapper>

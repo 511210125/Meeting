@@ -5,7 +5,10 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="number" jdbcType="INTEGER" property="number" />
-    <result column="owner" jdbcType="BIGINT" property="owner" />
+    <result column="cover_img" jdbcType="VARCHAR" property="coverImg" />
+    <result column="create_user" jdbcType="BIGINT" property="createUser" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -66,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, number, owner
+    id, name, number, cover_img, create_user, remark, create_time
   </sql>
   <select id="selectByExample" parameterType="cn.yiueil.meeting.entity.GroupExample" resultMap="BaseResultMap">
     select
@@ -98,11 +101,13 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.yiueil.meeting.entity.Group">
+  <insert id="insert" useGeneratedKeys="true"  parameterType="cn.yiueil.meeting.entity.Group">
     insert into t_group (id, name, number, 
-      owner)
+      cover_img, create_user, remark, 
+      create_time)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER}, 
-      #{owner,jdbcType=BIGINT})
+      #{coverImg,jdbcType=VARCHAR}, #{createUser,jdbcType=BIGINT}, #{remark,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="cn.yiueil.meeting.entity.Group">
     insert into t_group
@@ -116,8 +121,17 @@
       <if test="number != null">
         number,
       </if>
-      <if test="owner != null">
-        owner,
+      <if test="coverImg != null">
+        cover_img,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createTime != null">
+        create_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -130,8 +144,17 @@
       <if test="number != null">
         #{number,jdbcType=INTEGER},
       </if>
-      <if test="owner != null">
-        #{owner,jdbcType=BIGINT},
+      <if test="coverImg != null">
+        #{coverImg,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -153,8 +176,17 @@
       <if test="record.number != null">
         number = #{record.number,jdbcType=INTEGER},
       </if>
-      <if test="record.owner != null">
-        owner = #{record.owner,jdbcType=BIGINT},
+      <if test="record.coverImg != null">
+        cover_img = #{record.coverImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUser != null">
+        create_user = #{record.createUser,jdbcType=BIGINT},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -166,7 +198,10 @@
     set id = #{record.id,jdbcType=BIGINT},
       name = #{record.name,jdbcType=VARCHAR},
       number = #{record.number,jdbcType=INTEGER},
-      owner = #{record.owner,jdbcType=BIGINT}
+      cover_img = #{record.coverImg,jdbcType=VARCHAR},
+      create_user = #{record.createUser,jdbcType=BIGINT},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -180,8 +215,17 @@
       <if test="number != null">
         number = #{number,jdbcType=INTEGER},
       </if>
-      <if test="owner != null">
-        owner = #{owner,jdbcType=BIGINT},
+      <if test="coverImg != null">
+        cover_img = #{coverImg,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -190,7 +234,10 @@
     update t_group
     set name = #{name,jdbcType=VARCHAR},
       number = #{number,jdbcType=INTEGER},
-      owner = #{owner,jdbcType=BIGINT}
+      cover_img = #{coverImg,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=BIGINT},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

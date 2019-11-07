@@ -18,6 +18,15 @@ spring:
     password: 257689
     url: jdbc:mysql://www.xp.yiueil.cn:3306/meeting?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
+#    primary:
+#      max-idle: 10
+#      max-wait: 10000
+#      min-idle: 5
+#      initial-size: 5
+#      validation-query: SELECT 1
+#      test-on-borrow: false
+#      test-while-idle: true
+#      time-between-eviction-runs-millis: 18800
 
   #邮箱设置
   mail:
@@ -30,7 +39,7 @@ spring:
     subject: 验证码
 #mybatis配置
 mybatis:
-  mapper-locations: classpath:sqlmap/*Mapper.xml
+  mapper-locations: classpath:sqlmap/*Mapper*.xml
   type-aliases-package: cn.yiueil.entity
 
 

@@ -1,12 +1,24 @@
 import cn.yiueil.meeting.util.StringUtil;
+import cn.yiueil.meeting.vo.RJ;
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.annotation.JsonAlias;
+import jdk.nashorn.internal.runtime.JSONFunctions;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
+ *
+ * 468
+ *
  * __/\\\________/\\\____________/\\\\\\\\\\\_____________________________________________________________________________/\\\\\\________
  * _\///\\\____/\\\/____________\/////\\\///_____________________________________________________________________________\////\\\________
  * ___\///\\\/\\\/__________________\/\\\_________________________________________________________________/\\\______________\/\\\________
- * _____\///\\\/____________________\/\\\________________/\\\____/\\\_______________/\\\\\\\\\\____________\///______________\/\\\________
+ * _____\///\\\/____________________\/\\\________________/\\\____/\\\_______________/\\\\\\\\\\____________\///_____________\/\\\________
  * _______\/\\\_____________________\/\\\_______________\/\\\___\/\\\_____________/\\\/////////____________/\\\______________\/\\\________
  * _______\/\\\_____________________\/\\\_______________\/\\\___\/\\\____________/\\\\\\\\\\_______________\/\\\_____________\/\\\________
  * _______\/\\\_____________________\/\\\_______________\/\\\___\/\\\___________\//\\///////_______________\/\\\_____________\/\\\________
@@ -18,12 +30,32 @@ import java.util.Date;
  */
 public class test {
     public static void main(String[] args) {
-        func();
-        System.out.println(1);
 
     }
-
-    static void func(){
-        throw new RuntimeException();
+    public static PM egg(PM p1,PM p2){
+        if (p1.v == p2.v){
+            return new PM(p1.v+1,false);
+        }else if (Math.abs(p1.v - p2.v)==1){
+            if (p1.s||p2.s){
+                int v = Math.max(p1.v, p2.v);
+                return new PM(v,true);
+            }else {
+                return null;
+            }
+        }else {
+            return null;
+        }
     }
+
+}
+
+@ToString
+ class PM{
+    PM(){};
+    PM(int v,boolean s){
+        this.v = v;
+        this.s = s;
+    }
+    int v = 1;
+    boolean s = false;
 }

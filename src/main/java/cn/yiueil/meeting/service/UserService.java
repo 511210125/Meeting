@@ -1,7 +1,12 @@
 package cn.yiueil.meeting.service;
 
+import cn.yiueil.meeting.dto.MeetingCustom;
+import cn.yiueil.meeting.entity.Group;
 import cn.yiueil.meeting.entity.Meeting;
 import cn.yiueil.meeting.entity.User;
+import cn.yiueil.meeting.vo.GroupVo;
+import cn.yiueil.meeting.vo.MeetingVo;
+import org.apache.ibatis.jdbc.SQL;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -22,13 +27,25 @@ import java.util.List;
  */
 public interface UserService {
 
+    public List<User> findManageUserByUidList(Long uid)throws SQLException;
+
     /**
-     * 查询用户相关会议，参数是会议和人id。做活
-     * @param uid
-     * @param meetingFilter
+     * 查询用户相关会议
+     * @param meetingCustom
      * @return
+     * @throws SQLException
      */
-    public List<Meeting> findMeetingByUidList(Long uid,Meeting meetingFilter)throws SQLException;
+    public List<MeetingVo> findMeetingByUidList(MeetingCustom meetingCustom)throws SQLException;
+
+
+    /**
+     * 查询用户所在小组
+     * @param uid
+     * @return
+     * @throws SQLException
+     */
+    public List<GroupVo> findGroupByUidList(Long uid)throws SQLException;
+
 
     /**
      * 查询用户硌淫信息

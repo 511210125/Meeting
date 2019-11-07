@@ -3,14 +3,14 @@ package cn.yiueil.meeting.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserGroupExample {
+public class MeetingUserExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public UserGroupExample() {
+    public MeetingUserExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -104,63 +104,63 @@ public class UserGroupExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andGidIsNull() {
-            addCriterion("gid is null");
+        public Criteria andMidIsNull() {
+            addCriterion("mid is null");
             return (Criteria) this;
         }
 
-        public Criteria andGidIsNotNull() {
-            addCriterion("gid is not null");
+        public Criteria andMidIsNotNull() {
+            addCriterion("mid is not null");
             return (Criteria) this;
         }
 
-        public Criteria andGidEqualTo(Long value) {
-            addCriterion("gid =", value, "gid");
+        public Criteria andMidEqualTo(Long value) {
+            addCriterion("mid =", value, "mid");
             return (Criteria) this;
         }
 
-        public Criteria andGidNotEqualTo(Long value) {
-            addCriterion("gid <>", value, "gid");
+        public Criteria andMidNotEqualTo(Long value) {
+            addCriterion("mid <>", value, "mid");
             return (Criteria) this;
         }
 
-        public Criteria andGidGreaterThan(Long value) {
-            addCriterion("gid >", value, "gid");
+        public Criteria andMidGreaterThan(Long value) {
+            addCriterion("mid >", value, "mid");
             return (Criteria) this;
         }
 
-        public Criteria andGidGreaterThanOrEqualTo(Long value) {
-            addCriterion("gid >=", value, "gid");
+        public Criteria andMidGreaterThanOrEqualTo(Long value) {
+            addCriterion("mid >=", value, "mid");
             return (Criteria) this;
         }
 
-        public Criteria andGidLessThan(Long value) {
-            addCriterion("gid <", value, "gid");
+        public Criteria andMidLessThan(Long value) {
+            addCriterion("mid <", value, "mid");
             return (Criteria) this;
         }
 
-        public Criteria andGidLessThanOrEqualTo(Long value) {
-            addCriterion("gid <=", value, "gid");
+        public Criteria andMidLessThanOrEqualTo(Long value) {
+            addCriterion("mid <=", value, "mid");
             return (Criteria) this;
         }
 
-        public Criteria andGidIn(List<Long> values) {
-            addCriterion("gid in", values, "gid");
+        public Criteria andMidIn(List<Long> values) {
+            addCriterion("mid in", values, "mid");
             return (Criteria) this;
         }
 
-        public Criteria andGidNotIn(List<Long> values) {
-            addCriterion("gid not in", values, "gid");
+        public Criteria andMidNotIn(List<Long> values) {
+            addCriterion("mid not in", values, "mid");
             return (Criteria) this;
         }
 
-        public Criteria andGidBetween(Long value1, Long value2) {
-            addCriterion("gid between", value1, value2, "gid");
+        public Criteria andMidBetween(Long value1, Long value2) {
+            addCriterion("mid between", value1, value2, "mid");
             return (Criteria) this;
         }
 
-        public Criteria andGidNotBetween(Long value1, Long value2) {
-            addCriterion("gid not between", value1, value2, "gid");
+        public Criteria andMidNotBetween(Long value1, Long value2) {
+            addCriterion("mid not between", value1, value2, "mid");
             return (Criteria) this;
         }
 
@@ -224,73 +224,143 @@ public class UserGroupExample {
             return (Criteria) this;
         }
 
-        public Criteria andUroleIsNull() {
-            addCriterion("urole is null");
+        public Criteria andMroleIsNull() {
+            addCriterion("mrole is null");
             return (Criteria) this;
         }
 
-        public Criteria andUroleIsNotNull() {
-            addCriterion("urole is not null");
+        public Criteria andMroleIsNotNull() {
+            addCriterion("mrole is not null");
             return (Criteria) this;
         }
 
-        public Criteria andUroleEqualTo(String value) {
-            addCriterion("urole =", value, "urole");
+        public Criteria andMroleEqualTo(String value) {
+            addCriterion("mrole =", value, "mrole");
             return (Criteria) this;
         }
 
-        public Criteria andUroleNotEqualTo(String value) {
-            addCriterion("urole <>", value, "urole");
+        public Criteria andMroleNotEqualTo(String value) {
+            addCriterion("mrole <>", value, "mrole");
             return (Criteria) this;
         }
 
-        public Criteria andUroleGreaterThan(String value) {
-            addCriterion("urole >", value, "urole");
+        public Criteria andMroleGreaterThan(String value) {
+            addCriterion("mrole >", value, "mrole");
             return (Criteria) this;
         }
 
-        public Criteria andUroleGreaterThanOrEqualTo(String value) {
-            addCriterion("urole >=", value, "urole");
+        public Criteria andMroleGreaterThanOrEqualTo(String value) {
+            addCriterion("mrole >=", value, "mrole");
             return (Criteria) this;
         }
 
-        public Criteria andUroleLessThan(String value) {
-            addCriterion("urole <", value, "urole");
+        public Criteria andMroleLessThan(String value) {
+            addCriterion("mrole <", value, "mrole");
             return (Criteria) this;
         }
 
-        public Criteria andUroleLessThanOrEqualTo(String value) {
-            addCriterion("urole <=", value, "urole");
+        public Criteria andMroleLessThanOrEqualTo(String value) {
+            addCriterion("mrole <=", value, "mrole");
             return (Criteria) this;
         }
 
-        public Criteria andUroleLike(String value) {
-            addCriterion("urole like", value, "urole");
+        public Criteria andMroleLike(String value) {
+            addCriterion("mrole like", value, "mrole");
             return (Criteria) this;
         }
 
-        public Criteria andUroleNotLike(String value) {
-            addCriterion("urole not like", value, "urole");
+        public Criteria andMroleNotLike(String value) {
+            addCriterion("mrole not like", value, "mrole");
             return (Criteria) this;
         }
 
-        public Criteria andUroleIn(List<String> values) {
-            addCriterion("urole in", values, "urole");
+        public Criteria andMroleIn(List<String> values) {
+            addCriterion("mrole in", values, "mrole");
             return (Criteria) this;
         }
 
-        public Criteria andUroleNotIn(List<String> values) {
-            addCriterion("urole not in", values, "urole");
+        public Criteria andMroleNotIn(List<String> values) {
+            addCriterion("mrole not in", values, "mrole");
             return (Criteria) this;
         }
 
-        public Criteria andUroleBetween(String value1, String value2) {
-            addCriterion("urole between", value1, value2, "urole");
+        public Criteria andMroleBetween(String value1, String value2) {
+            addCriterion("mrole between", value1, value2, "mrole");
             return (Criteria) this;
         }
 
-        public Criteria andUroleNotBetween(String value1, String value2) {
-            addCriterion("urole not between", value1, value2, "urole");
+        public Criteria andMroleNotBetween(String value1, String value2) {
+            addCriterion("mrole not between", value1, value2, "mrole");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNull() {
+            addCriterion("status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNotNull() {
+            addCriterion("status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusEqualTo(String value) {
+            addCriterion("status =", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotEqualTo(String value) {
+            addCriterion("status <>", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThan(String value) {
+            addCriterion("status >", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThanOrEqualTo(String value) {
+            addCriterion("status >=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThan(String value) {
+            addCriterion("status <", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThanOrEqualTo(String value) {
+            addCriterion("status <=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLike(String value) {
+            addCriterion("status like", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotLike(String value) {
+            addCriterion("status not like", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIn(List<String> values) {
+            addCriterion("status in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotIn(List<String> values) {
+            addCriterion("status not in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusBetween(String value1, String value2) {
+            addCriterion("status between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotBetween(String value1, String value2) {
+            addCriterion("status not between", value1, value2, "status");
             return (Criteria) this;
         }
     }

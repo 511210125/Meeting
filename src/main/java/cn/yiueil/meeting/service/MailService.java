@@ -1,5 +1,6 @@
 package cn.yiueil.meeting.service;
 
+
 public interface MailService {
 
     /**

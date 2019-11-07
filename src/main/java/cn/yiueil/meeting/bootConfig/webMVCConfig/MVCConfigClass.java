@@ -1,6 +1,7 @@
 package cn.yiueil.meeting.bootConfig.webMVCConfig;
 
 import cn.yiueil.meeting.handler.interceptor.ManageInterceptor;
+import cn.yiueil.meeting.handler.interceptor.UserInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -51,6 +52,8 @@ public class MVCConfigClass implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new ManageInterceptor()).addPathPatterns("/manage**").excludePathPatterns("/manageLoginSubmit");
+//        registry.addInterceptor(new UserInterceptor()).addPathPatterns("/**")
+//        .excludePathPatterns("/keyCheck","/nameCheck","/mailCheck","/phoneCheck","/loginSubmit","/registerSubmit","/sendMail");
     }
 
 }

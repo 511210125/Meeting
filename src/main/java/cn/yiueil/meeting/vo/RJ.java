@@ -39,6 +39,7 @@ public class RJ {
      * @param msg
      */
     public RJ(Object result,String msg){
+        this.result =  result;
         this.msg=msg;
     }
 
@@ -48,8 +49,8 @@ public class RJ {
      * @param msg
      */
     public RJ(int code,String msg){
-        code = this.code;
-        msg = this.msg;
+        this.code = code;
+        this.msg = msg;
     }
 
     private Object result;
