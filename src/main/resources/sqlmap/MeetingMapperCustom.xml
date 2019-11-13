@@ -35,14 +35,14 @@
     text
   </sql>
 
-  <select id="findManageUserListByUid" parameterType="java.lang.Long" resultType="cn.yiueil.meeting.entity.User">
+  <select id="selectManageUserListByUid" parameterType="java.lang.Long" resultType="cn.yiueil.meeting.entity.User">
       select * from t_user where id in(
           select distinct  uid from t_user_group where gid in
           ( select gid from t_user_group where urole != 'user' and uid = #{uid})
       )
   </select>
 
-  <select id="findMeetingCustomByUidList" parameterType="java.lang.Long" resultMap="MeetingCustomMap">
+  <select id="selectMeetingCustomByUidList" parameterType="java.lang.Long" resultMap="MeetingCustomMap">
         select
           `t_meeting`.*,
           `t_user`.`avatar_url`,
@@ -73,7 +73,7 @@
   </select>
 
 
-    <select id="findRandomUid" resultType="java.lang.Long">
+    <select id="selectRandomUid" resultType="java.lang.Long">
       select id from t_user where id in(
       select uid from t_user_group where urole !='user'
       )

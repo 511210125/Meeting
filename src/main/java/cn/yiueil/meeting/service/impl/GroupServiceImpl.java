@@ -1,10 +1,7 @@
 package cn.yiueil.meeting.service.impl;
 
 import cn.yiueil.meeting.entity.*;
-import cn.yiueil.meeting.mapper.GroupMapper;
-import cn.yiueil.meeting.mapper.MyMapper;
-import cn.yiueil.meeting.mapper.UserGroupMapper;
-import cn.yiueil.meeting.mapper.UserMapperCustom;
+import cn.yiueil.meeting.mapper.*;
 import cn.yiueil.meeting.service.GroupService;
 import cn.yiueil.meeting.vo.GroupVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +29,7 @@ import java.util.List;
 @Transactional
 public class GroupServiceImpl implements GroupService {
     @Autowired
-    private GroupMapper groupMapper;
+    private GroupMapperCustom groupMapperCustom;
 
     @Autowired
     private UserGroupMapper userGroupMapper;
@@ -52,8 +49,13 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<Group> findGroup(Group groupFilter) throws SQLException {
-        return null;
+    public List<GroupVo> findManageGroupList(Long uid) throws SQLException {
+        return groupMapperCustom.selectGroupVoByUid(uid);
+    }
+
+    @Override
+    public List<GroupVo> findGroup(Group groupFilter) throws SQLException {
+        return groupMapperCustom.selectGroupByFilter(groupFilter);
     }
 
     @Override
@@ -61,30 +63,22 @@ public class GroupServiceImpl implements GroupService {
         return userMapperCustom.findUserByGidList(gid);
     }
 
-    @Override
-    public List<Group> findCreateByUserGroupList(Long uid) throws SQLException {
-        return null;
-    }
 
     @Override
     public List<Group> findGroupByUserList(Long uid, boolean urole) throws SQLException {
         return null;
     }
 
-    @Override
-    public GroupVo findGroupInformationByGid(Long gid) throws SQLException {
-        return null;
-    }
 
     @Override
     public void removeGroupByGid(Long gid) throws SQLException {
-            groupMapper.deleteByPrimaryKey(gid);
+            groupMapperCustom.deleteByPrimaryKey(gid);
     }
 
     @Override
     public Long saveNewGroup(Long uid, Group newGroup) throws SQLException {
             Long gid;
-            groupMapper.insertSelective(newGroup);
+            groupMapperCustom.insertSelective(newGroup);
             UserGroup userGroup = new UserGroup();
             userGroup.setUid(uid);
             gid = myMapper.selectMaxId();
@@ -95,8 +89,8 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public void modifyGroupInformation(Long uid, Group group) throws SQLException {
-
+    public void modifyGroupInformation(Group group) throws SQLException {
+            groupMapperCustom.updateByPrimaryKeySelective(group);
     }
 
     @Override
@@ -119,7 +113,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public void modifyGroupAddUserList(List<Long> uids, Long gid) throws SQLException {
-            for (Long uid :uids){
+            for (Long uid :uids){//可以优化的点,一次性插入
                 this.modifyGroupAddUser(uid,gid);
             }
     }

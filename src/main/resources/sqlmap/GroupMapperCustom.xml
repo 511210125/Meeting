@@ -9,6 +9,7 @@
     <result column="create_user" jdbcType="BIGINT" property="createUser" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+
     <collection property="userList" ofType="cn.yiueil.meeting.entity.User">
       <id column="uid" jdbcType="BIGINT" property="id" />
       <result column="uname" jdbcType="VARCHAR" property="name" />
@@ -16,6 +17,7 @@
       <result column="phone" jdbcType="VARCHAR" property="phone" />
       <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
     </collection>
+
   </resultMap>
 
     <resultMap id="UserMap" type="cn.yiueil.meeting.entity.User">
@@ -47,6 +49,7 @@
           `t_user_group`
         where uid = #{uid})
   </select>
+
     <select id="selectManageUserByUid" parameterType="java.lang.Long" resultMap="UserMap">
         select
           *
@@ -64,9 +67,57 @@
               `t_user_group`
             where uid = #{uid}
               and urole != 'user'))
-
   </select>
 
+    <select id="selectGroupVoByCreateUid" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+        `t_group`.*,
+        t_user.id as uid,
+        t_user.name as uname,
+        t_user.mail,
+        t_user.phone,
+        t_user.avatar_url
+      from
+        `t_group`,
+        `t_user`,
+        `t_user_group`
+      where `t_user_group`.`gid` = `t_group`.`id`
+        and `t_user_group`.`uid` = `t_user`.`id`
+        and `t_group`.id in
+        (select id from t_group where create_user = #{uid})
+  </select>
 
+    <select id="selectGroupByFilter" parameterType="cn.yiueil.meeting.entity.Group" resultMap="BaseResultMap">
+        select
+        t_group.id,
+        t_group.name,
+        number,
+        cover_img,
+        create_user,
+        remark,
+        create_time,
+        t_user.id as uid,
+        t_user.name as uname,
+        t_user.mail,
+        t_user.phone,
+        t_user.avatar_url
+        from
+        t_group,
+        t_user,
+        t_user_group
+        <where>
+            t_group.`id` = t_user_group.`gid`
+            and t_user.`id` = t_user_group.`uid`
+            <if test="name!=null and name!=''">
+                and t_group.name like "%"#{name,jdbcType=VARCHAR}"%"
+            </if>
+            <if test="id!=null and id!=''">
+                and t_group.id = #{id}
+            </if>
+            <if test="createUser!=null and createUser!=''">
+                and t_group.create_user = #{createUser}
+            </if>
+        </where>
 
+    </select>
 </mapper>

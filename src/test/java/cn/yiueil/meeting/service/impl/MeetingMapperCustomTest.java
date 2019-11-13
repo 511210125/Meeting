@@ -39,7 +39,7 @@ public class MeetingMapperCustomTest {
 
     @Test
     public void findManageUserListByUid() {
-        List<User> manageUserListByUid = meetingMapperCustom.findManageUserListByUid(1L);
+        List<User> manageUserListByUid = meetingMapperCustom.selectManageUserListByUid(1L);
         for (User u:manageUserListByUid){
             System.out.println(u.getName());
         }

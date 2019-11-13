@@ -31,7 +31,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-
 public class MeetingApplicationTests {
     @Autowired
     private LoginMapper loginMapper;
@@ -275,9 +274,9 @@ public class MeetingApplicationTests {
     //插入会议
     @Test
     public void findManageUserListByUid() {
-        List<Long> managerIdList = meetingMapperCustom.findRandomUid();
+        List<Long> managerIdList = meetingMapperCustom.selectRandomUid();
         for (int z=1 ;z<managerIdList.size()-1;z++){
-            List<User> manageUserListByUid = meetingMapperCustom.findManageUserListByUid(managerIdList.get(z));
+            List<User> manageUserListByUid = meetingMapperCustom.selectManageUserListByUid(managerIdList.get(z));
             List<Long> uids =new ArrayList<>();
             int i = new Random().nextInt(manageUserListByUid.size());
             for (int j =0;j<i;j++){

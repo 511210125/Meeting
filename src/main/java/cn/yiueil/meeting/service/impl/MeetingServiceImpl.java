@@ -4,6 +4,7 @@ import cn.yiueil.meeting.entity.Meeting;
 import cn.yiueil.meeting.entity.MeetingUser;
 import cn.yiueil.meeting.entity.User;
 import cn.yiueil.meeting.mapper.MeetingMapper;
+import cn.yiueil.meeting.mapper.MeetingMapperCustom;
 import cn.yiueil.meeting.mapper.MeetingUserMapper;
 import cn.yiueil.meeting.mapper.MyMapper;
 import cn.yiueil.meeting.service.MeetingService;
@@ -35,18 +36,13 @@ public class MeetingServiceImpl implements MeetingService {
     @Autowired
     private MyMapper myMapper;
     @Autowired
-    private MeetingMapper meetingMapper;
+    private MeetingMapperCustom meetingMapperCustom;
     @Autowired
     private MeetingUserMapper meetingUserMapper;
 
     @Override
     public String UserMeetingRoleTest(Long mid, Long uid) throws SQLException {
-        return null;
-    }
-
-    @Override
-    public List<GroupVo> findManageGroupList(Long uid) throws SQLException {
-        return null;
+        return meetingMapperCustom.selectMeetingUserRole(uid,mid);
     }
 
     @Override
@@ -56,7 +52,7 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Override
     public void saveReleaseMeeting(Meeting meeting,List<Long> uids,Long issuer,Long chair,Long recorder) throws SQLException {
-        meetingMapper.insertSelective(meeting);
+        meetingMapperCustom.insertSelective(meeting);
         Long mid = myMapper.selectMaxId();
         MeetingUser key ;
         for (Long uid : uids){

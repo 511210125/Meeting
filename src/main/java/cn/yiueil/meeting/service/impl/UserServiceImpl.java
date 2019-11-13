@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<MeetingVo> findMeetingByUidList(MeetingCustom meetingCustom) throws SQLException {
-        List<MeetingVo> meetingVoList = meetingMapperCustom.findMeetingCustomByUidList(meetingCustom);
+        List<MeetingVo> meetingVoList = meetingMapperCustom.selectMeetingCustomByUidList(meetingCustom);
         for (MeetingVo meetingVo : meetingVoList) {
             for (UserCustom user : meetingVo.getUsers()) {
                 if (user.getMrole().equals("issuer"))

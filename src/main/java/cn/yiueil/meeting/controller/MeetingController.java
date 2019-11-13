@@ -5,6 +5,7 @@ import cn.yiueil.meeting.mapper.MeetingMapperCustom;
 import cn.yiueil.meeting.vo.RJ;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;

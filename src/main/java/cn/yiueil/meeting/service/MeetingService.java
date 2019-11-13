@@ -30,18 +30,12 @@ public interface MeetingService {
 
     /**
      * 查询用户在某会议中的权限
-     * @param mid
-     * @param uid
+     * @param mid 会议id
+     * @param uid 用户id
      * @return
      */
     String UserMeetingRoleTest(Long mid,Long uid)throws SQLException;
 
-    /**
-     * 加载管理的用户群组，懒加载群组成员,需要复习一下resultMap
-     *      * @param uid
-     * @return
-     */
-    List<GroupVo> findManageGroupList(Long uid)throws SQLException;
 
 
     List<User> findManageUserList(Long uid)throws SQLException;

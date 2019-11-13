@@ -34,15 +34,27 @@ public interface GroupService {
      * @param uid
      * @param gid
      * @return
+     * ok
      */
     String roleTest(Long uid, Long gid)throws SQLException;
 
+
     /**
-     * 按条件找小组List,懒加载小组成员
+     * 加载管理的用户群组，懒加载群组成员,需要复习一下resultMap
+     * @param uid
+     * @return
+     * ok
+     */
+    List<GroupVo> findManageGroupList(Long uid)throws SQLException;
+
+
+    /**
+     * 按条件找小组List,懒加载小组成员(懒加载能大幅提升效率)
      * @param groupFilter
      * @return
+     *
      */
-    public List<Group> findGroup(Group groupFilter)throws SQLException;
+    public List<GroupVo> findGroup(Group groupFilter)throws SQLException;
 
     /**
      * 查询某小组成员
@@ -52,25 +64,12 @@ public interface GroupService {
     public List<User> findUserByGidList(Long gid)throws SQLException;
 
     /**
-     * 查询某人创建的小组
-     * @param uid
-     * @return
-     */
-    public List<Group> findCreateByUserGroupList(Long uid)throws SQLException;
-
-    /**
      * 查询某人所管理或所在的小组
      * @param uid
      * @param urole 用户是否具有管理权限,true或false
      * @return
      */
     public List<Group> findGroupByUserList(Long uid,boolean urole)throws SQLException;
-
-    /**
-     * 查看小组信息,懒加载小组用户
-     * @return
-     */
-    public GroupVo findGroupInformationByGid(Long gid)throws SQLException;
 
     /**
      * 删除某小组？解散
@@ -87,10 +86,9 @@ public interface GroupService {
 
     /**
      * 修改小组信息
-     * @param uid
      * @param group
      */
-    public void modifyGroupInformation(Long uid,Group group)throws SQLException;
+    public void modifyGroupInformation(Group group)throws SQLException;
 
     /**
      * 修改某人的小组角色,小组拥有者专用
@@ -106,6 +104,12 @@ public interface GroupService {
      */
     public void modifyGroupAddUser(Long uid,Long gid)throws SQLException;
 
+    /**
+     * 将一群人与的id与某组关联
+     * @param uids
+     * @param gid
+     * @throws SQLException
+     */
     public void modifyGroupAddUserList(List<Long> uids,Long gid)throws SQLException;
 
     /**

@@ -53,7 +53,7 @@ public class LoginController {
 
      */
     @PostMapping("/loginSubmit")
-    public Object login(@RequestParam String key,
+    public Object loginSubmit(@RequestParam String key,
                         @RequestParam String passwd){
         RJ rj;
         try{
