@@ -40,6 +40,7 @@ public class GroupController {
     public RJ createGroup(Long uid, Group group) {
         RJ rj = new RJ();
         try {
+            group.setCreateUser(uid);
             groupService.saveNewGroup(uid,group);
             rj.setMsg("创建成功");
             return rj;

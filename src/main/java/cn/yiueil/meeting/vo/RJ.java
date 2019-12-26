@@ -39,7 +39,7 @@ public class RJ {
      * @param msg
      */
     public RJ(Object result,String msg){
-        this.result =  result;
+        this.result = result;
         this.msg=msg;
     }
 

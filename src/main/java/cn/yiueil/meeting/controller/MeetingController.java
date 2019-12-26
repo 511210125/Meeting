@@ -36,9 +36,20 @@ public class MeetingController {
      * @param meetingCustom 会议信息
      * @return
      */
-    @PostMapping("releaseMeetingSubmit")
+    @PostMapping("/releaseMeetingSubmit")
     public RJ releaseMeetingSubmit(MeetingCustom meetingCustom){
         return null;
+    }
+
+    /**
+     * 新发布会议通知,可选择通知方式
+     * @param mid
+     * @param uid
+     * @param type
+     */
+    @GetMapping("/MeetingNotify")
+    public void MeetingNotify(Long mid,Long uid,String type){
+
     }
 
     /**
@@ -80,4 +91,5 @@ public class MeetingController {
     public RJ audioFileUpload(MultipartFile audio,Boolean format){
         return null;
     }
+
 }

@@ -21,6 +21,13 @@
 
     <dependencies>
 
+        <!--七牛云上传-->
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>7.2.27</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.belerweb/pinyin4j -->
         <dependency>
             <groupId>com.belerweb</groupId>

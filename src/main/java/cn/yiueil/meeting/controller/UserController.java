@@ -53,7 +53,7 @@ public class UserController {
     private LoginService loginService;
 
 
-    @GetMapping("showManageUserList")
+    @GetMapping("/showManageUserList")
     public RJ showManageUserList(@RequestParam Long uid){
         Map<Character,List<User>> txl = new HashMap<>();
         for (char i='A';i<'Z';i++){
@@ -92,7 +92,7 @@ public class UserController {
      *返还值 cn.yiueil.meeting.vo.RJ
 
      */
-    @GetMapping("showUserMeetingList")
+    @GetMapping("/showUserMeetingList")
     public RJ showUserMeetingList(@RequestParam Long uid, Meeting meeting){
         RJ rj = new RJ(400,"查询出错");
         try {
@@ -120,7 +120,7 @@ public class UserController {
      *返还值 cn.yiueil.meeting.vo.RJ
 
      */
-    @GetMapping("groupLoading")
+    @GetMapping("/groupLoading")
     public RJ ManageGroupLoading(@RequestParam Long uid){
         try {
             return new RJ(userService.findGroupByUidList(uid));
@@ -139,7 +139,7 @@ public class UserController {
      *参数 [uid]
      *返还值 cn.yiueil.meeting.vo.RJ
      */
-    @GetMapping("showUserInfo")
+    @GetMapping("/showUserInfo")
     public RJ showUserInfo(@RequestParam Long uid){
         try {
             User user = userService.findUserInformationByUid(uid);
@@ -151,13 +151,13 @@ public class UserController {
 
     }
     //用户上传虚拟头像
-    @PostMapping("uploadAvatarUrl")
+    @PostMapping("/uploadAvatarUrl")
     public RJ uploadHeadImg(){
         return null;
     }
 
     //修改个人信息,通用。。。
-    @PostMapping("alterUserInfo")
+    @PostMapping("/alterUserInfo")
     public void alterUserInfo(User user){
         if (user.getId()==null){
             return;
@@ -170,7 +170,7 @@ public class UserController {
     }
 
     //用户加入小组
-    @PostMapping("joinGroup")
+    @PostMapping("/joinGroup")
     public RJ joinGroup(@RequestParam Long uid,@RequestParam Long gid){
         try {
             groupService.modifyGroupAddUser(uid,gid);
@@ -182,13 +182,13 @@ public class UserController {
     }
 
     //手机号更换提交，手机号短信验证,Ajax
-    @GetMapping("alterUserPhone")
+    @GetMapping("/alterUserPhone")
     public RJ alterUserPhone(){
         return null;
     }
 
     //邮箱更换提交，邮箱验证,Ajax
-    @GetMapping("alterUserMail")
+    @GetMapping("/alterUserMail")
     public void alterUserMail(@RequestParam String newMail,@RequestParam Long uid){
             User user = new User();
             user.setId(uid);

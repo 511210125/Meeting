@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.yiueil.meeting.mapper.GroupMapper">
-  <resultMap id="BaseResultMap" type="cn.yiueil.meeting.entity.Group">
+<mapper namespace="cn.yiueil.meeting.mapper.MeetingAnnexMapper">
+  <resultMap id="BaseResultMap" type="cn.yiueil.meeting.entity.MeetingAnnex">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="number" jdbcType="INTEGER" property="number" />
-    <result column="cover_img" jdbcType="VARCHAR" property="coverImg" />
-    <result column="create_user" jdbcType="BIGINT" property="createUser" />
-    <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="mid" jdbcType="BIGINT" property="mid" />
+    <result column="file_url" jdbcType="VARCHAR" property="fileUrl" />
+    <result column="type" jdbcType="BIT" property="type" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,15 +66,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, number, cover_img, create_user, remark, create_time
+    id, mid, file_url, type
   </sql>
-  <select id="selectByExample" parameterType="cn.yiueil.meeting.entity.GroupExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="cn.yiueil.meeting.entity.MeetingAnnexExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from t_group
+    from t_meeting_annex
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -88,105 +85,76 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from t_group
+    from t_meeting_annex
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from t_group
+    delete from t_meeting_annex
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="cn.yiueil.meeting.entity.GroupExample">
-    delete from t_group
+  <delete id="deleteByExample" parameterType="cn.yiueil.meeting.entity.MeetingAnnexExample">
+    delete from t_meeting_annex
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.yiueil.meeting.entity.Group">
-    insert into t_group (id, name, number, 
-      cover_img, create_user, remark, 
-      create_time)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER}, 
-      #{coverImg,jdbcType=VARCHAR}, #{createUser,jdbcType=BIGINT}, #{remark,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP})
+  <insert id="insert" parameterType="cn.yiueil.meeting.entity.MeetingAnnex">
+    insert into t_meeting_annex (id, mid, file_url, 
+      type)
+    values (#{id,jdbcType=BIGINT}, #{mid,jdbcType=BIGINT}, #{fileUrl,jdbcType=VARCHAR}, 
+      #{type,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="cn.yiueil.meeting.entity.Group">
-    insert into t_group
+  <insert id="insertSelective" parameterType="cn.yiueil.meeting.entity.MeetingAnnex">
+    insert into t_meeting_annex
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="name != null">
-        name,
+      <if test="mid != null">
+        mid,
       </if>
-      <if test="number != null">
-        number,
+      <if test="fileUrl != null">
+        file_url,
       </if>
-      <if test="coverImg != null">
-        cover_img,
-      </if>
-      <if test="createUser != null">
-        create_user,
-      </if>
-      <if test="remark != null">
-        remark,
-      </if>
-      <if test="createTime != null">
-        create_time,
+      <if test="type != null">
+        type,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
+      <if test="mid != null">
+        #{mid,jdbcType=BIGINT},
       </if>
-      <if test="number != null">
-        #{number,jdbcType=INTEGER},
+      <if test="fileUrl != null">
+        #{fileUrl,jdbcType=VARCHAR},
       </if>
-      <if test="coverImg != null">
-        #{coverImg,jdbcType=VARCHAR},
-      </if>
-      <if test="createUser != null">
-        #{createUser,jdbcType=BIGINT},
-      </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
+      <if test="type != null">
+        #{type,jdbcType=BIT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="cn.yiueil.meeting.entity.GroupExample" resultType="java.lang.Long">
-    select count(*) from t_group
+  <select id="countByExample" parameterType="cn.yiueil.meeting.entity.MeetingAnnexExample" resultType="java.lang.Long">
+    select count(*) from t_meeting_annex
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update t_group
+    update t_meeting_annex
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.name != null">
-        name = #{record.name,jdbcType=VARCHAR},
+      <if test="record.mid != null">
+        mid = #{record.mid,jdbcType=BIGINT},
       </if>
-      <if test="record.number != null">
-        number = #{record.number,jdbcType=INTEGER},
+      <if test="record.fileUrl != null">
+        file_url = #{record.fileUrl,jdbcType=VARCHAR},
       </if>
-      <if test="record.coverImg != null">
-        cover_img = #{record.coverImg,jdbcType=VARCHAR},
-      </if>
-      <if test="record.createUser != null">
-        create_user = #{record.createUser,jdbcType=BIGINT},
-      </if>
-      <if test="record.remark != null">
-        remark = #{record.remark,jdbcType=VARCHAR},
-      </if>
-      <if test="record.createTime != null">
-        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=BIT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -194,50 +162,35 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update t_group
+    update t_meeting_annex
     set id = #{record.id,jdbcType=BIGINT},
-      name = #{record.name,jdbcType=VARCHAR},
-      number = #{record.number,jdbcType=INTEGER},
-      cover_img = #{record.coverImg,jdbcType=VARCHAR},
-      create_user = #{record.createUser,jdbcType=BIGINT},
-      remark = #{record.remark,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+      mid = #{record.mid,jdbcType=BIGINT},
+      file_url = #{record.fileUrl,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.yiueil.meeting.entity.Group">
-    update t_group
+  <update id="updateByPrimaryKeySelective" parameterType="cn.yiueil.meeting.entity.MeetingAnnex">
+    update t_meeting_annex
     <set>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+      <if test="mid != null">
+        mid = #{mid,jdbcType=BIGINT},
       </if>
-      <if test="number != null">
-        number = #{number,jdbcType=INTEGER},
+      <if test="fileUrl != null">
+        file_url = #{fileUrl,jdbcType=VARCHAR},
       </if>
-      <if test="coverImg != null">
-        cover_img = #{coverImg,jdbcType=VARCHAR},
-      </if>
-      <if test="createUser != null">
-        create_user = #{createUser,jdbcType=BIGINT},
-      </if>
-      <if test="remark != null">
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
+      <if test="type != null">
+        type = #{type,jdbcType=BIT},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.yiueil.meeting.entity.Group">
-    update t_group
-    set name = #{name,jdbcType=VARCHAR},
-      number = #{number,jdbcType=INTEGER},
-      cover_img = #{coverImg,jdbcType=VARCHAR},
-      create_user = #{createUser,jdbcType=BIGINT},
-      remark = #{remark,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
+  <update id="updateByPrimaryKey" parameterType="cn.yiueil.meeting.entity.MeetingAnnex">
+    update t_meeting_annex
+    set mid = #{mid,jdbcType=BIGINT},
+      file_url = #{fileUrl,jdbcType=VARCHAR},
+      type = #{type,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -66,7 +66,7 @@ public class LoginController {
                 rj.setResult(user);
                 //token生成
                 String token = new Date().getTime()+ StringUtil.encode(user.getId().toString());
-                //后台生成token使用时间戳+用户id的md5
+                //后台生成token使用时间戳+用户id+md5加密后的用户密码,整体再对称加密一波.待实现
 
                 //前台每次请求发送用户id，和token,同时判断时间是否超时，以及用户id使用md5加密后是否和用户一致
                 rj.setToken(token);

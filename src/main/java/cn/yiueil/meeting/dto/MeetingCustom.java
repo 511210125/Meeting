@@ -24,9 +24,13 @@ import java.util.List;
 @Getter
 @Setter
 public class MeetingCustom extends Meeting {
-    private Long uid;//查询人
+    private Long uid;//发布人
 
-    List<MeetingUser> participants;//与会人
+    private Long chair;//主持人
+
+    private Long recorder;//记录人
+
+    List<MeetingUser> users;//与会人
 
 
 
