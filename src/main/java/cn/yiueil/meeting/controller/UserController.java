@@ -5,6 +5,7 @@ import cn.yiueil.meeting.entity.Meeting;
 import cn.yiueil.meeting.entity.User;
 import cn.yiueil.meeting.service.*;
 import cn.yiueil.meeting.util.ChineseCharacterUtil;
+import cn.yiueil.meeting.vo.GroupVo;
 import cn.yiueil.meeting.vo.MeetingVo;
 import cn.yiueil.meeting.vo.RJ;
 import org.slf4j.Logger;
@@ -129,6 +130,27 @@ public class UserController {
             throw new RuntimeException();
         }
     }
+
+    /**
+     * 加载用户创建会议时候的管理小组和管理用户     加急
+     * @param uid
+     * @return
+     */
+    @GetMapping("/ManageGroupAndUserLoading")
+    public RJ ManageGroupAndUserLoading(@RequestParam Long uid){
+        try {
+            List<User> userList = userService.findManageUserByUidList(uid);
+            List<GroupVo> groupVoList = groupService.findManageGroupList(uid);
+            Map<String ,Object> map = new HashMap<>();
+            map.put("userList",userList);
+            map.put("groupVoList",groupVoList);
+            return new RJ(map,"成功查询");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     /**
      *message

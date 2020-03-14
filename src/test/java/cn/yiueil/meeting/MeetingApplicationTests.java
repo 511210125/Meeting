@@ -337,7 +337,7 @@ public class MeetingApplicationTests {
     }
     class meet extends Meeting {
          meet(){
-             this.setRemark("请准时到场,严格考勤");
+             this.setRemarks("请准时到场,严格考勤");
              this.setTitle(this.titles[new Random().nextInt(titles.length)]);
              this.setPlace(this.places[new Random().nextInt(places.length)]);
              this.setReleaseTime(new Date(new Date().getTime()));

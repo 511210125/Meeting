@@ -52,4 +52,20 @@ public class GroupMapperCustomTest {
         System.out.println();
 
     }
+
+    @Test
+    public void testSelectGroupVoByUid() {
+    }
+
+    @Test
+    public void testSelectManageUserByUid() {
+    }
+
+    @Test
+    public void testSelectGroupVoByCreateUid() {
+    }
+
+    @Test
+    public void selectGroupByFilter() {
+    }
 }

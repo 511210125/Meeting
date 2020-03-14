@@ -5,6 +5,7 @@ import cn.yiueil.meeting.entity.MeetingUser;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -30,8 +31,8 @@ public class MeetingCustom extends Meeting {
 
     private Long recorder;//记录人
 
-    List<MeetingUser> users;//与会人
+    private List<Long> users;//与会人
 
-
+    List<MeetingFile> fileList;
 
 }

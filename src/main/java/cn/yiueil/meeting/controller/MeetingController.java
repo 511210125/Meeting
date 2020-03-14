@@ -9,6 +9,8 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,14 +32,15 @@ public class MeetingController {
     @Autowired
     private MeetingMapperCustom meetingMapperCustom;
 
-
     /**
      * 发布会议
      * @param meetingCustom 会议信息
      * @return
      */
     @PostMapping("/releaseMeetingSubmit")
-    public RJ releaseMeetingSubmit(MeetingCustom meetingCustom){
+    public RJ releaseMeetingSubmit(@RequestBody MeetingCustom meetingCustom){
+        //创建会议
+
         return null;
     }
 
