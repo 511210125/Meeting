@@ -10,12 +10,13 @@
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
 
-    <collection property="userList" ofType="cn.yiueil.meeting.entity.User">
+    <collection property="userList" ofType="cn.yiueil.meeting.entity.UserCustom">
       <id column="uid" jdbcType="BIGINT" property="id" />
       <result column="uname" jdbcType="VARCHAR" property="name" />
       <result column="mail" jdbcType="VARCHAR" property="mail" />
       <result column="phone" jdbcType="VARCHAR" property="phone" />
       <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+      <result column="urole" jdbcType="VARCHAR" property="urole" />
     </collection>
 
   </resultMap>
@@ -35,7 +36,8 @@
         t_user.name as uname,
         t_user.mail,
         t_user.phone,
-        t_user.avatar_url
+        t_user.avatar_url,
+        `t_user_group`.`urole`
       from
         `t_group`,
         `t_user`,

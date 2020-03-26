@@ -2,12 +2,8 @@ package cn.yiueil.meeting.service.impl;
 
 import cn.yiueil.meeting.dto.MeetingCustom;
 import cn.yiueil.meeting.dto.UserCustom;
-import cn.yiueil.meeting.entity.Group;
-import cn.yiueil.meeting.entity.Meeting;
-import cn.yiueil.meeting.entity.User;
-import cn.yiueil.meeting.mapper.GroupMapperCustom;
-import cn.yiueil.meeting.mapper.MeetingMapperCustom;
-import cn.yiueil.meeting.mapper.UserMapperCustom;
+import cn.yiueil.meeting.entity.*;
+import cn.yiueil.meeting.mapper.*;
 import cn.yiueil.meeting.service.UserService;
 import cn.yiueil.meeting.vo.GroupVo;
 import cn.yiueil.meeting.vo.MeetingVo;
@@ -39,6 +35,8 @@ public class UserServiceImpl implements UserService {
     private MeetingMapperCustom meetingMapperCustom;
     @Autowired
     private GroupMapperCustom groupMapperCustom;
+    @Autowired
+    private RemindMapperCustom remindMapperCustom;
 
     @Override
     public List<User> findManageUserByUidList(Long uid) throws SQLException {
@@ -85,5 +83,28 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Meeting> XXX() throws SQLException {
         return null;
+    }
+
+    @Override
+    public void addRemind(Remind remind) throws SQLException {
+        remindMapperCustom.insertSelective(remind);
+    }
+
+    @Override
+    public List<Remind> findRemindListByUid(Long uid) throws SQLException {
+        return remindMapperCustom.selectRemindListByUid(uid);
+    }
+
+    @Override
+    public void modifyRemindByUid(Remind remind, Long uid) throws SQLException {
+        RemindExample remindExample = new RemindExample();
+        remindExample.createCriteria().andUidEqualTo(uid).andIdEqualTo(remind.getId());
+        remind.setId(null);
+        remindMapperCustom.updateByExampleSelective(remind,remindExample);
+    }
+
+    @Override
+    public void removeRemindByUid(Long rid,Long uid) throws SQLException {
+        remindMapperCustom.deleteRemindById(rid,uid);
     }
 }

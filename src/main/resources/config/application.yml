@@ -16,7 +16,7 @@ spring:
   datasource:
     username: root
     password: 257689
-    url: jdbc:mysql://www.xp.yiueil.cn:3306/meeting?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://www.xp.yiueil.cn:3306/meeting?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       minimum-idle: 3

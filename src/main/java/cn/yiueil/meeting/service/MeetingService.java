@@ -1,5 +1,6 @@
 package cn.yiueil.meeting.service;
 
+import cn.yiueil.meeting.dto.MeetingFile;
 import cn.yiueil.meeting.entity.Group;
 import cn.yiueil.meeting.entity.Meeting;
 import cn.yiueil.meeting.entity.User;
@@ -8,6 +9,7 @@ import cn.yiueil.meeting.vo.MeetingVo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,7 +48,7 @@ public interface MeetingService {
      * @param uids
      * @throws SQLException
      */
-    public void saveReleaseMeeting(Meeting meeting,List<Long> uids,Long issuer,Long chair,Long recorder) throws SQLException;
+    public Long saveReleaseMeeting(Meeting meeting,List<Long> uids,Long issuer,Long chair,Long recorder) throws SQLException;
 
     /**
      * 会议启动,通知相关人参会,修改会议状态
@@ -70,11 +72,11 @@ public interface MeetingService {
 
     /**
      * 会议附件上传
-     * @param file
+     * @param fileList
      * @param mid
      * @param type 是会前文件还是会议记录文件
      */
-    public void saveMeetingAnnexFile(MultipartFile file,Long mid,boolean type)throws SQLException;
+    public void saveMeetingAnnexFile(List<MeetingFile> fileList, Long mid, boolean type)throws SQLException;
 
     /**
      * 查看会议信息以及会议附件(权限检查)，懒加载参会人信息
@@ -89,5 +91,7 @@ public interface MeetingService {
      */
     public void removeMeetingAnnexFileByFid(Long fid)throws SQLException;
 
+    //会议通知生成
+    public void remindQueue(List<Long> userList, Long mid, Date meetingStartDate)throws SQLException;
 
 }

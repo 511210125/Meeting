@@ -1,5 +1,6 @@
 package cn.yiueil.meeting.vo;
 
+import cn.yiueil.meeting.dto.MeetingFile;
 import cn.yiueil.meeting.dto.UserCustom;
 import cn.yiueil.meeting.entity.Meeting;
 import cn.yiueil.meeting.entity.User;
@@ -28,4 +29,5 @@ import java.util.List;
 public class MeetingVo extends Meeting{
     private String avatar;//发布人头像
     private List<UserCustom> users;//参会人
+    private List<MeetingFile> files;//会议相关文件
 }

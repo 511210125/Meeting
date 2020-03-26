@@ -2,16 +2,19 @@ package cn.yiueil.meeting.controller;
 
 import cn.yiueil.meeting.dto.MeetingCustom;
 import cn.yiueil.meeting.mapper.MeetingMapperCustom;
+import cn.yiueil.meeting.service.MeetingService;
 import cn.yiueil.meeting.vo.RJ;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * __/\\\________/\\\____________/\\\\\\\\\\\_____________________________________________________________________________/\\\\\\________
@@ -31,6 +34,8 @@ import java.util.Map;
 public class MeetingController {
     @Autowired
     private MeetingMapperCustom meetingMapperCustom;
+    @Autowired
+    private MeetingService meetingService;
 
     /**
      * 发布会议
@@ -39,8 +44,31 @@ public class MeetingController {
      */
     @PostMapping("/releaseMeetingSubmit")
     public RJ releaseMeetingSubmit(@RequestBody MeetingCustom meetingCustom){
-        //创建会议
 
+        try {
+            //创建会议
+            Long mid = meetingService.saveReleaseMeeting
+                    (meetingCustom, meetingCustom.getUsers().stream().distinct().collect(Collectors.toList()),
+                            meetingCustom.getUid(), meetingCustom.getChair(), meetingCustom.getRecorder());
+            //会议前附件保存
+            meetingService.saveMeetingAnnexFile(meetingCustom.getFileList(),mid,false);
+
+            //创建线程去队列提醒任务
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        meetingService.remindQueue(meetingCustom.getUsers(),mid,meetingCustom.getStartTime());
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
+            return new RJ(mid,"会议"+ mid +"发布成功");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 

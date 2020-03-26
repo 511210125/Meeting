@@ -3,6 +3,7 @@ package cn.yiueil.meeting.service;
 import cn.yiueil.meeting.dto.MeetingCustom;
 import cn.yiueil.meeting.entity.Group;
 import cn.yiueil.meeting.entity.Meeting;
+import cn.yiueil.meeting.entity.Remind;
 import cn.yiueil.meeting.entity.User;
 import cn.yiueil.meeting.vo.GroupVo;
 import cn.yiueil.meeting.vo.MeetingVo;
@@ -71,6 +72,14 @@ public interface UserService {
     //调整个人会前提醒时间
     public List<Meeting> XXX()throws SQLException;
 
-    //设置闹钟式提醒
+    //添加闹钟式提醒
+    public void addRemind(Remind remind)throws SQLException;
+    //查询闹钟式提醒
+    public List<Remind> findRemindListByUid(Long uid)throws SQLException;
+    //修改闹钟式提醒
+    public void modifyRemindByUid(Remind remind,Long uid)throws SQLException;
+    //删除闹钟式提醒
+    public void removeRemindByUid(Long rid,Long uid)throws SQLException;
+
 
 }

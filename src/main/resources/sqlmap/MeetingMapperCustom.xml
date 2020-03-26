@@ -13,15 +13,29 @@
     </resultMap>
 
     <resultMap id="MeetingCustomMap" type="cn.yiueil.meeting.vo.MeetingVo" extends="BaseResultMap">
+        <collection property="files" javaType="java.util.ArrayList"
+                    ofType="cn.yiueil.meeting.dto.MeetingFile"
+                    select="cn.yiueil.meeting.mapper.MeetingAnnexMapperCustom.selectMeetingFileListByMid"
+                    column="id"
+        >
+            <id column="id" jdbcType="BIGINT" property="uid" />
+            <result column="name" jdbcType="VARCHAR" property="name" />
+            <result column="file_url" jdbcType="VARCHAR" property="url" />
+            <result column="type" jdbcType="BIT" property="type" />
+        </collection>
+
         <collection property="users"  ofType="cn.yiueil.meeting.dto.UserCustom">
             <id column="uid" jdbcType="BIGINT" property="id" />
+            <id column="mrole" jdbcType="VARCHAR" property="mrole" />
             <result column="name" jdbcType="VARCHAR" property="name" />
             <result column="mail" jdbcType="VARCHAR" property="mail" />
             <result column="phone" jdbcType="VARCHAR" property="phone" />
             <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
-            <result column="mrole" jdbcType="VARCHAR" property="mrole" />
             <result column="ustatus" jdbcType="VARCHAR" property="status" />
         </collection>
+
+
+
     </resultMap>
 
 

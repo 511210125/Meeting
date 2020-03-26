@@ -13,10 +13,11 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-
 public class MeetingFile {
+    private String id;
     private String name;
     private String status;
     private String uid;
     private String url;
+    private Boolean type; //会议文件类型
 }

@@ -17,6 +17,7 @@ import cn.yiueil.meeting.vo.RJ;
  * Create time 2019/9/6
  * message
  */
+
 public interface ManageService {
     //管理员登陆
     void findManagerByKeyAndPasswd(String key, String passwd, RJ rj);

@@ -2,6 +2,7 @@ package cn.yiueil.meeting.controller;
 
 import cn.yiueil.meeting.dto.MeetingCustom;
 import cn.yiueil.meeting.entity.Meeting;
+import cn.yiueil.meeting.entity.Remind;
 import cn.yiueil.meeting.entity.User;
 import cn.yiueil.meeting.service.*;
 import cn.yiueil.meeting.util.ChineseCharacterUtil;
@@ -12,10 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -124,7 +122,8 @@ public class UserController {
     @GetMapping("/groupLoading")
     public RJ ManageGroupLoading(@RequestParam Long uid){
         try {
-            return new RJ(userService.findGroupByUidList(uid));
+            List<GroupVo> groupByUidList = userService.findGroupByUidList(uid);
+            return new RJ(groupByUidList);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException();
@@ -222,6 +221,60 @@ public class UserController {
         }
     }
 
+    //用户添加提醒方式
+    @PostMapping("/addRemind")
+    public void addRemind(@RequestParam Long uid,
+                          @RequestParam byte of,
+                          @RequestParam byte type,
+                          @RequestParam boolean enable,
+                          @RequestParam Integer param
+    ){
+        Remind remind = new Remind();
+        remind.setRenable(enable);
+        remind.setRof(of);
+        remind.setRtype(type);
+        if (param<=0){
+            throw new RuntimeException("时间参数必须是大于0");
+        }
+        remind.setRparam(param);
+        remind.setUid(uid);
+        try {
+            userService.addRemind(remind);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
+    //用户提醒方式查询
+    @GetMapping("/getUserRemindList")
+    public RJ getUserRemindList(@RequestParam Long uid){
+        List<Remind> remindList = null;
+        try {
+            remindList = userService.findRemindListByUid(uid);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new RJ(remindList);
+    }
 
+    //用户提醒方式修改
+    @PostMapping("/modifyUserRemind")
+    public void modifyUserRemind(Remind remind,Long uid){
+        try {
+            userService.modifyRemindByUid(remind,uid);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //用户提醒方式删除
+    @PostMapping("/delUserRemind")
+    public void delUserRemind(@RequestParam Long uid,
+                              @RequestParam Long rid){
+        try {
+            userService.removeRemindByUid(rid,uid);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
