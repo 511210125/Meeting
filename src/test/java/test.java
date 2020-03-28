@@ -7,9 +7,11 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  *
@@ -30,7 +32,14 @@ import java.util.List;
  */
 public class test {
     public static void main(String[] args) {
+        long current=System.currentTimeMillis();    //当前时间毫秒数
+        long zeroT=current/(1000*3600*24)*(1000*3600*24)- TimeZone.getDefault().getRawOffset();  //今天零点零分零秒的毫秒数
+        String zero = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(zeroT);
+        long endT=zeroT+24*60*60*1000-1;  //今天23点59分59秒的毫秒数
+        String end = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(endT);
 
+        System.out.println(zero);				//	2018-07-23 00:00:00
+        System.out.println(end);				//	2018-07-23 23:59:59
     }
     public static PM egg(PM p1,PM p2){
         if (p1.v == p2.v){
